@@ -1,0 +1,67 @@
+{# <!-- Nav bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+    <a class="navbar-brand hvr-icon-rotate hvr-grow" href="{{ path('home') }}">
+        <img src="/img/icon_navbar.png" alt="" class="hvr-icon rounded-circle shadow img-fluid mt-2 mb-2" style="width: 32px;">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor03">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link hvr-icon-pulse-grow" href="{{path('home')}}">
+                    <i class="fas fa-columns text-warning hvr-icon"></i>
+                    Tableau de bord
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link hvr-icon-pulse-grow" href="{{ path('devis_enterprise') }}">
+                    <i class="far fa-building text-secondary hvr-icon"></i>
+                    Mon entreprise
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link hvr-icon-spin" href="{{ path('devis_account') }}">
+                    <i class="far fa-user-circle text-info hvr-icon"></i>
+                    Mon compte
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link hvr-icon-wobble-horizontal" href="{{ path('customer_index') }}">
+                    <i class="fas fa-users text-primary hvr-icon"></i>
+                    Mes clients
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link hvr-icon-rotate" href="{{ path('works_index') }}">
+                    <i class="fas fa-fill-drip text-warning hvr-icon"></i>
+                    Mes travaux
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link hvr-icon-down" href="#">
+                    <i class="fas fa-paint-roller text-danger hvr-icon"></i>
+                    Mes tâches
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link hvr-icon-buzz" href="{{ path('devis_index') }}">
+                    <i class="fas  fa-file-invoice-dollar text-success hvr-icon"></i>
+                    Mes devis
+                </a>
+            </li>
+        </ul>
+  </div>
+</nav>
+<!-- /Nav bar --> #}
+
+<!-- Flash message -->
+{% for label, messages in app.flashes %}
+    <div class="alert alert-{{ label }}">
+        {% for message in messages %}
+            <p>{{ message|raw }}</p>
+        {% endfor %}
+    </div>
+{% endfor %}
+<!-- /Flash message -->
