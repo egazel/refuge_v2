@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -77,34 +75,6 @@ class Animal
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $type;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\FA", mappedBy="animalHosting")
-     */
-    private $hostingFamily;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Member", mappedBy="animalAdoption")
-     */
-    private $adoptingMember;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Gerant", mappedBy="animalAdd")
-     */
-    private $adminAdding;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Race", mappedBy="animalsWithRace")
-     */
-    private $animalRace;
-
-    public function __construct()
-    {
-        $this->hostingFamily = new ArrayCollection();
-        $this->adoptingMember = new ArrayCollection();
-        $this->adminAdding = new ArrayCollection();
-        $this->animalRace = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -251,130 +221,6 @@ class Animal
     public function setType(?string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|FA[]
-     */
-    public function getHostingFamily(): Collection
-    {
-        return $this->hostingFamily;
-    }
-
-    public function addHostingFamily(FA $hostingFamily): self
-    {
-        if (!$this->hostingFamily->contains($hostingFamily)) {
-            $this->hostingFamily[] = $hostingFamily;
-            $hostingFamily->setAnimalHosting($this);
-        }
-
-        return $this;
-    }
-
-    public function removeHostingFamily(FA $hostingFamily): self
-    {
-        if ($this->hostingFamily->contains($hostingFamily)) {
-            $this->hostingFamily->removeElement($hostingFamily);
-            // set the owning side to null (unless already changed)
-            if ($hostingFamily->getAnimalHosting() === $this) {
-                $hostingFamily->setAnimalHosting(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Member[]
-     */
-    public function getAdoptingMember(): Collection
-    {
-        return $this->adoptingMember;
-    }
-
-    public function addAdoptingMember(Member $adoptingMember): self
-    {
-        if (!$this->adoptingMember->contains($adoptingMember)) {
-            $this->adoptingMember[] = $adoptingMember;
-            $adoptingMember->setAnimalAdoption($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAdoptingMember(Member $adoptingMember): self
-    {
-        if ($this->adoptingMember->contains($adoptingMember)) {
-            $this->adoptingMember->removeElement($adoptingMember);
-            // set the owning side to null (unless already changed)
-            if ($adoptingMember->getAnimalAdoption() === $this) {
-                $adoptingMember->setAnimalAdoption(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Gerant[]
-     */
-    public function getAdminAdding(): Collection
-    {
-        return $this->adminAdding;
-    }
-
-    public function addAdminAdding(Gerant $adminAdding): self
-    {
-        if (!$this->adminAdding->contains($adminAdding)) {
-            $this->adminAdding[] = $adminAdding;
-            $adminAdding->setAnimalAdd($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAdminAdding(Gerant $adminAdding): self
-    {
-        if ($this->adminAdding->contains($adminAdding)) {
-            $this->adminAdding->removeElement($adminAdding);
-            // set the owning side to null (unless already changed)
-            if ($adminAdding->getAnimalAdd() === $this) {
-                $adminAdding->setAnimalAdd(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Race[]
-     */
-    public function getAnimalRace(): Collection
-    {
-        return $this->animalRace;
-    }
-
-    public function addAnimalRace(Race $animalRace): self
-    {
-        if (!$this->animalRace->contains($animalRace)) {
-            $this->animalRace[] = $animalRace;
-            $animalRace->setAnimalsWithRace($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAnimalRace(Race $animalRace): self
-    {
-        if ($this->animalRace->contains($animalRace)) {
-            $this->animalRace->removeElement($animalRace);
-            // set the owning side to null (unless already changed)
-            if ($animalRace->getAnimalsWithRace() === $this) {
-                $animalRace->setAnimalsWithRace(null);
-            }
-        }
 
         return $this;
     }

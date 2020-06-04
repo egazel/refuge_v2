@@ -51,11 +51,6 @@ class FA
      */
     private $userRole;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Animal", inversedBy="hostingFamily")
-     */
-    private $animalHosting;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -141,18 +136,6 @@ class FA
     public function setUserRole(?User $userRole): self
     {
         $this->userRole = $userRole;
-
-        return $this;
-    }
-
-    public function getAnimalHosting(): ?Animal
-    {
-        return $this->animalHosting;
-    }
-
-    public function setAnimalHosting(?Animal $animalHosting): self
-    {
-        $this->animalHosting = $animalHosting;
 
         return $this;
     }

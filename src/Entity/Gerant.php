@@ -21,11 +21,6 @@ class Gerant
      */
     private $userRole;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Animal", inversedBy="adminAdding")
-     */
-    private $animalAdd;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -39,18 +34,6 @@ class Gerant
     public function setUserRole(?User $userRole): self
     {
         $this->userRole = $userRole;
-
-        return $this;
-    }
-
-    public function getAnimalAdd(): ?Animal
-    {
-        return $this->animalAdd;
-    }
-
-    public function setAnimalAdd(?Animal $animalAdd): self
-    {
-        $this->animalAdd = $animalAdd;
 
         return $this;
     }
