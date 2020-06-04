@@ -64,7 +64,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function getCredentials(Request $request)
     {
         $userMail = $request->request->get('email');
-      
+ 
         $currentUser = $this->userRepository->findOneByEmail($userMail);
         $savedBrowserForCurrentUser = $currentUser->getUsualBrowser();
 
@@ -101,12 +101,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
                                                             'user' => $currentUser
                                                         ]);
                 $this->mailer->send($email);
-               
-                $flashBag = $request->getSession()->getFlashBag();
-                $flashBag->add(
-                    'danger',
-                    'Merci de valider votre navigateur via le mail que nous vous avons envoyé.'
-                );
                 $currentUser->setUsualBrowser($bname);
               
             } else {

@@ -4,3 +4,7 @@
 
 2fa_login_check:
     path: /2fa_check
+
+index:
+    path: /
+    controller: App\Controller\IndexController::index
