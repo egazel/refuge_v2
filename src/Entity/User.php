@@ -51,21 +51,6 @@ class User implements UserInterface, TwoFactorInterface
      */
     private $usual_browser;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Gerant", mappedBy="userRole", cascade={"persist", "remove"})
-     */
-    private $isGerant;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\FA", mappedBy="userRole", cascade={"persist", "remove"})
-     */
-    private $isFA;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Member", mappedBy="userRole", cascade={"persist", "remove"})
-     */
-    private $isMember;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -192,60 +177,6 @@ class User implements UserInterface, TwoFactorInterface
     public function setUsualBrowser(?string $usual_browser): self
     {
         $this->usual_browser = $usual_browser;
-
-        return $this;
-    }
-
-    public function getIsGerant(): ?Gerant
-    {
-        return $this->isGerant;
-    }
-
-    public function setIsGerant(?Gerant $isGerant): self
-    {
-        $this->isGerant = $isGerant;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newUserRole = null === $isGerant ? null : $this;
-        if ($isGerant->getUserRole() !== $newUserRole) {
-            $isGerant->setUserRole($newUserRole);
-        }
-
-        return $this;
-    }
-
-    public function getIsFA(): ?FA
-    {
-        return $this->isFA;
-    }
-
-    public function setIsFA(?FA $isFA): self
-    {
-        $this->isFA = $isFA;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newUserRole = null === $isFA ? null : $this;
-        if ($isFA->getUserRole() !== $newUserRole) {
-            $isFA->setUserRole($newUserRole);
-        }
-
-        return $this;
-    }
-
-    public function getIsMember(): ?Member
-    {
-        return $this->isMember;
-    }
-
-    public function setIsMember(?Member $isMember): self
-    {
-        $this->isMember = $isMember;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newUserRole = null === $isMember ? null : $this;
-        if ($isMember->getUserRole() !== $newUserRole) {
-            $isMember->setUserRole($newUserRole);
-        }
 
         return $this;
     }

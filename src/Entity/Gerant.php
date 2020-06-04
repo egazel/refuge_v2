@@ -16,25 +16,8 @@ class Gerant
      */
     private $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="isGerant", cascade={"persist", "remove"})
-     */
-    private $userRole;
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUserRole(): ?User
-    {
-        return $this->userRole;
-    }
-
-    public function setUserRole(?User $userRole): self
-    {
-        $this->userRole = $userRole;
-
-        return $this;
     }
 }
