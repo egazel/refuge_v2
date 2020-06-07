@@ -72,8 +72,10 @@ class RegistrationController extends AbstractController
                 }elseif(preg_match('/Trident/i',$u_agent)){
                   $bname = 'Internet Explorer';
                 }
-
                 $user->setUsualBrowser($bname);
+                
+                $user->setRoles(["ROLE_MEMBER"]);
+                
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);

@@ -22,7 +22,27 @@ class AuthenticationController extends AbstractController
      */
     public function admin()
     {
-        return $this->render('authentication/index.html.twig', [
+        return $this->render('admin/index.html.twig', [
+            'controller_name' => 'AuthenticationController',
+        ]);
+    }
+
+    /**
+     * @Route("/FA", name="FA")
+     */
+    public function FA()
+    {
+        return $this->render('FA/index.html.twig', [
+            'controller_name' => 'AuthenticationController',
+        ]);
+    }
+
+      /**
+     * @Route("/member", name="member")
+     */
+    public function member()
+    {
+        return $this->render('member/index.html.twig', [
             'controller_name' => 'AuthenticationController',
         ]);
     }

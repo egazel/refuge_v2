@@ -1,0 +1,4 @@
+{% if is_granted('ROLE_ADMIN') %}
+<h1> You're an admin, harry. </h1>
+<a href="/logout">LOG OUT</a>
+{% endif %}
