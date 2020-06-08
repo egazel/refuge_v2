@@ -8,38 +8,32 @@
 
     <div class="collapse navbar-collapse" id="navbarColor03">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link hvr-icon-pulse-grow" href="{{path('admin')}}">
-                    <i class="fas fa-columns text-warning hvr-icon"></i>
-                    Tableau de bord
-                </a>
-            </li>
             <li class="nav-item">
-                <a class="nav-link hvr-icon-pulse-grow" href="{{ path('admin') }}">
+                <a class="nav-link hvr-icon-pulse-grow" href="{{ path('animalList') }}">
                     <i class="far fa-building text-secondary hvr-icon"></i>
                     Liste des animaux
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link hvr-icon-spin" href="{{ path('admin') }}">
+                <a class="nav-link hvr-icon-spin" href="{{ path('userList') }}">
                     <i class="far fa-user-circle text-info hvr-icon"></i>
                     Liste des utilisateurs
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link hvr-icon-wobble-horizontal" href="{{ path('admin') }}">
+                <a class="nav-link hvr-icon-wobble-horizontal" href="{{ path('fosterRequests') }}">
                     <i class="fas fa-users text-primary hvr-icon"></i>
                     Demandes de FA
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link hvr-icon-rotate" href="{{ path('admin') }}">
+                <a class="nav-link hvr-icon-rotate" href="{{ path('eventList') }}">
                     <i class="fas fa-fill-drip text-warning hvr-icon"></i>
                     Évenements
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link hvr-icon-down" href="#">
+                <a class="nav-link hvr-icon-down" href="{{path('donationsList')}}">
                     <i class="fas fa-paint-roller text-danger hvr-icon"></i>
                     Donations
                 </a>
