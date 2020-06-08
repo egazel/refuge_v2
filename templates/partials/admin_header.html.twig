@@ -1,6 +1,5 @@
-{# <!-- Nav bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-    <a class="navbar-brand hvr-icon-rotate hvr-grow" href="{{ path('home') }}">
+    <a class="navbar-brand hvr-icon-rotate hvr-grow" href="{{ path('admin') }}">
         <img src="/img/icon_navbar.png" alt="" class="hvr-icon rounded-circle shadow img-fluid mt-2 mb-2" style="width: 32px;">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,51 +9,51 @@
     <div class="collapse navbar-collapse" id="navbarColor03">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link hvr-icon-pulse-grow" href="{{path('home')}}">
+                <a class="nav-link hvr-icon-pulse-grow" href="{{path('admin')}}">
                     <i class="fas fa-columns text-warning hvr-icon"></i>
                     Tableau de bord
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link hvr-icon-pulse-grow" href="{{ path('devis_enterprise') }}">
+                <a class="nav-link hvr-icon-pulse-grow" href="{{ path('admin') }}">
                     <i class="far fa-building text-secondary hvr-icon"></i>
-                    Mon entreprise
+                    Liste des animaux
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link hvr-icon-spin" href="{{ path('devis_account') }}">
+                <a class="nav-link hvr-icon-spin" href="{{ path('admin') }}">
                     <i class="far fa-user-circle text-info hvr-icon"></i>
-                    Mon compte
+                    Liste des utilisateurs
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link hvr-icon-wobble-horizontal" href="{{ path('customer_index') }}">
+                <a class="nav-link hvr-icon-wobble-horizontal" href="{{ path('admin') }}">
                     <i class="fas fa-users text-primary hvr-icon"></i>
-                    Mes clients
+                    Demandes de FA
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link hvr-icon-rotate" href="{{ path('works_index') }}">
+                <a class="nav-link hvr-icon-rotate" href="{{ path('admin') }}">
                     <i class="fas fa-fill-drip text-warning hvr-icon"></i>
-                    Mes travaux
+                    Évenements
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link hvr-icon-down" href="#">
                     <i class="fas fa-paint-roller text-danger hvr-icon"></i>
-                    Mes tâches
+                    Donations
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link hvr-icon-buzz" href="{{ path('devis_index') }}">
-                    <i class="fas  fa-file-invoice-dollar text-success hvr-icon"></i>
-                    Mes devis
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a class="nav-link hvr-icon-down" href="/logout">
+                    <span class="fas fa-sign-out-alt"></span> Log out
                 </a>
             </li>
         </ul>
   </div>
 </nav>
-<!-- /Nav bar --> #}
+
 
 <!-- Flash message -->
 {% for label, messages in app.flashes %}

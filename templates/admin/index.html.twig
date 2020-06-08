@@ -1,4 +1,45 @@
 {% if is_granted('ROLE_ADMIN') %}
-<h1> You're an admin, harry. </h1>
-<a href="/logout">LOG OUT</a>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Interface Administrateur</title>
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <link rel="stylesheet" href="/css/bootstrap.css">
+        <link rel="stylesheet" href="/css/general.css">
+        <link rel="stylesheet" href="/css/hover.css">
+        <link rel="stylesheet" href="/css/admin.css">
+        <link rel="stylesheet" href="/css/dashboard.css">
+
+
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/dashboard.js"></script>
+        <script src="https://kit.fontawesome.com/6576995845.js" crossorigin="anonymous"></script>
+
+        {% include "partials/admin_header.html.twig" %}
+
+    </head>
+    <body>
+        <h1 class="text-center mt-5"> Tableau de bord administrateur </h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <img src="http://via.placeholder.com/400"></img>
+                </div>
+                <div class="col-sm">
+                    <button class="btn btn-primary">Créer un nouvel évenement</button>
+                    <br><br>
+                    <button class="btn btn-primary">Ajouter un animal</button>
+                </div>
+                <div class="col-sm">
+                    <p>test</p>
+                </div>
+                <div class="col-sm">
+                <p>test</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
 {% endif %}
