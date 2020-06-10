@@ -76,6 +76,11 @@ class Animal
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isHosted;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -221,6 +226,18 @@ class Animal
     public function setType(?string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getIsHosted(): ?bool
+    {
+        return $this->isHosted;
+    }
+
+    public function setIsHosted(bool $isHosted): self
+    {
+        $this->isHosted = $isHosted;
 
         return $this;
     }
