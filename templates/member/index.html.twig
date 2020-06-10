@@ -1,5 +1,38 @@
 {% if is_granted('ROLE_MEMBER') %}
-<h1> You're a member, harry </h1>
-<a href="/logout">LOG OUT</a>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Interface Membre</title>
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <link rel="stylesheet" href="/css/bootstrap.css">
+        <link rel="stylesheet" href="/css/general.css">
+        <link rel="stylesheet" href="/css/hover.css">
+        <link rel="stylesheet" href="/css/admin.css">
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/6576995845.js" crossorigin="anonymous"></script>
 
+        {% include "partials/member_header.html.twig" %}
+
+    </head>
+    <body>
+        <h1 class="text-center mt-5">Tableau de bord</h1>
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-sm">
+                    <img src="http://via.placeholder.com/350"></img>
+                </div>
+                <div class="col-sm">
+                    <img src="http://via.placeholder.com/350"></img>
+                </div>
+                <div class="col-sm">
+                    <img src="http://via.placeholder.com/350"></img>
+                </div>
+            </div>
+        </div>
+        {% include "partials/member_footer.html.twig" %}
+    </body>
+
+</html>
 {% endif %}
