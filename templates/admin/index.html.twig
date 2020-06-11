@@ -8,30 +8,77 @@
         <link rel="stylesheet" href="/css/general.css">
         <link rel="stylesheet" href="/css/hover.css">
         <link rel="stylesheet" href="/css/admin.css">
+
         <script src="/js/jquery.min.js"></script>
         <script src="/js/popper.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/mdb.min.js"></script>
         <script src="https://kit.fontawesome.com/6576995845.js" crossorigin="anonymous"></script>
 
         {% include "partials/admin_header.html.twig" %}
 
     </head>
     <body>
-        <h1 class="text-center mt-5"> Tableau de bord administrateur </h1>
+        <h1 class="text-center mt-5"><i class="fas fa-chart-line"></i> Tableau de bord administrateur </h1>
         <div class="container">
             <div class="row mt-5">
-                <div class="col-sm">
-                    <img src="http://via.placeholder.com/350"></img>
+                <div class="col-sm-4">
+                    <h5 class="text-center"><i class="fas fa-users"></i> Répartition des membres</h5>
+                    <canvas id="doughnutChart"></canvas>
+                    <script src="/js/chart.js"></script>
+
+                    
+                    <h5 class="text-center mt-5"><i class="fas fa-user"></i> Nouveaux utilisateurs</h5>
+                    <canvas id="lineChart"></canvas>
+                    <script src="/js/chart.js"></script>
                 </div>
-                <div class="col-sm">
-                    <img src="http://via.placeholder.com/350"></img>
+                <div class="col-sm-4">
+                    <div class="card" style="height:27rem">
+                        <div class="card-header">
+                            <i class="far fa-calendar-alt"></i>                            
+                            Prochain événement :
+                            XX/XX/XXXX - Lieu de l'event
+                        </div>
+                        <ul class="list-group list-group-flush"  style="overflow:auto;">
+                            <li class="list-group-item">John Doe</li>
+                            <li class="list-group-item">John Doe</li>
+                            <li class="list-group-item">John Doe</li>
+                            <li class="list-group-item">John Doe</li>
+                            <li class="list-group-item">John Doe</li>
+                            <li class="list-group-item">John Doe</li>
+                            <li class="list-group-item">John Doe</li>                            
+                            <li class="list-group-item">John Doe</li>
+                            <li class="list-group-item">John Doe</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-sm">
-                    <img src="http://via.placeholder.com/350"></img>
+                <div class="col-sm-4">
+                    <div class="card" >
+                        <div class="card-header">
+                            <i class="fas fa-hand-holding-usd"></i>
+                            Plus gros donateurs
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">1. Username - Total amount $</li>
+                            <li class="list-group-item">2. Username - Total amount $</li>
+                            <li class="list-group-item">3. Username - Total amount $</li>
+                        </ul>
+                    </div>
+
+                    <div class="card mt-5" >
+                        <div class="card-header">
+                            <i class="fas fa-dollar-sign"></i>
+                            Derniers dons
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Date, Username - Amount $</li>
+                            <li class="list-group-item">Date, Username - Amount $</li>
+                            <li class="list-group-item">Date, Username - Amount $</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-        {% include "partials/admin_footer.html.twig" %}
     </body>
 
 </html>

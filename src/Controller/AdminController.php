@@ -18,26 +18,6 @@ class AdminController extends AbstractController
     }
 
     /** 
-     * @Route("/admin/event", name="adminEvent")
-    */
-    public function eventCreation()
-    {
-        return $this->render('admin/event.html.twig', [
-            'controller_namer' => 'AdminController',
-        ]);
-    }
-    
-    /** 
-     * @Route("/admin/animal", name="addAnimal")
-    */
-    public function animalCreation()
-    {
-        return $this->render('admin/addanimal.html.twig', [
-            'controller_namer' => 'AdminController',
-        ]);
-    }
-
-    /** 
     * @Route("/admin/animalList", name="animalList")
     */
     public function animalList()

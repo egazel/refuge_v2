@@ -93,19 +93,71 @@
     <div class="modal fade" id="addAnimalModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Ajouter un animal à l'adoption</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="animalType">Espèce</label>
+                            <input type="text" class="form-control" id="animalType" placeholder="Chien, chat...">
+                        </div>
+
+                         <div class="form-group">
+                            <label for="animalName">Nom</label>
+                            <input type="text" class="form-control" id="animalName" placeholder="Nom de l'animal">
+                        </div>
+
+                        <div class="form-group d-inline-block"   style="width:66%;">
+                            <label for="animalAge">Âge</label>
+                            <input type="number" class="form-control" id="animalAge" placeholder="0">
+                        </div>
+
+                        <div class="form-group d-inline-block">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-warning">
+                                    <input type="radio" name="options" id="male" autocomplete="off" checked> Mâle
+                                </label>
+                                <label class="btn btn-warning">
+                                    <input type="radio" name="options" id="female" autocomplete="off"> Femelle
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-check d-inline-block">
+                            <input type="checkbox" class="form-check-input" id="okCats">
+                            <label class="form-check-label" for="okCats">Ok chats</label>
+                        </div>
+                        <div class="form-check d-inline-block">
+                            <input type="checkbox" class="form-check-input" id="okDogs">
+                            <label class="form-check-label" for="okDogs">Ok chiens</label>
+                        </div>
+                        <div class="form-check d-inline-block">
+                            <input type="checkbox" class="form-check-input" id="okKids">
+                            <label class="form-check-label" for="okKids">Ok enfants</label>
+                        </div>
+                        <div class="form-check d-inline-block">
+                            <input type="checkbox" class="form-check-input" id="needCare">
+                            <label class="form-check-label" for="needCare">Traitement particulier</label>
+                        </div>
+
+                        <div class="form-group d-inline-block mt-2"   style="width:66%;">
+                            <label for="adoptionPrice">Prix d'adoption</label>
+                            <input type="number" class="form-control" id="adoptionPrice" placeholder="0€ si gratuit">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="animalDesc">Description</label>
+                            <textarea class="form-control" id="animalDesc" rows="3" placeholder="255 caractères max."></textarea>
+                        </div>
+                        <div class="mt-3 text-center">
+                            <button type="submit" class="btn btn-primary m-*-auto">Enregistrer l'animal</button>
+                        </div>
+                        {# TODO  Ajouter en auto is_hosted=false,#}
+                    </form>
+                </div>
             </div>
         </div>
     </div>
