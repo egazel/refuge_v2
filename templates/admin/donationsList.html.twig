@@ -32,21 +32,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for donation in donations %}
+                    {% for i in 0..donations|length-1 %}
                         <tr>
-                            <th scope="row">{{donation.id}}</th>
-                            <td>{{donation.amount}}€</td>
-                            <td>{{donation.date.format('d/m/Y')}}</td>
-                            <td>{user.name}</td>
-                        </tr>
-                    {% else %}
+                            <th scope="row">{{donations[i].id}}</th>
+                            <td>{{donations[i].amount}}€</td>
+                            <td>{{donations[i].date.format('d/m/Y')}}</td>
+                        <td>{{donationsIds[i]}}</td>
+                        </tr>   
+                    {% endfor %}
+                    {# {% else %}
                         <tr>
                             <th scope="row">No donations yet !</th>
                             <th></th>
                             <th></th>
                             <th></th>
-                        </tr>
-                    {% endfor %}
+                        </tr> #}
                     </tbody>
                     </table>
                 </div>

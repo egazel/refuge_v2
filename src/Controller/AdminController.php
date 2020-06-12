@@ -58,9 +58,16 @@ class AdminController extends AbstractController
     public function donationsList()
     {
         $donations = $this->getDoctrine()->getRepository('App:Donation')->findAll();
-
+        $donationMailsArray = [];
+        foreach ($donations as $don) {
+         
+            $donatingMemberId= $don->memberDonating->getId();
+            $userCorresponding = $this->getDoctrine()->getRepository('App:User')->findByDonatingMemberId($donatingMemberId);
+            $mail = $userCorresponding[0]->getEmail();
+            array_push($donationMailsArray, $mail);
+        }
         return $this->render('admin/donationsList.html.twig', 
-        ['donations' => $donations],);
+        ['donations' => $donations, 'donationsIds' => $donationMailsArray],);
     }
 
     /** 

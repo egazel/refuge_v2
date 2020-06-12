@@ -26,6 +26,11 @@ class Donation
      */
     private $date;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Membre", inversedBy="donation")
+     */
+    public $memberDonating;
+
     public function getId(): ?int
     {
         return $this->id;
