@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Event;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Event|null find($id, $lockMode = null, $lockVersion = null)
@@ -36,15 +37,23 @@ class EventRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Event
+    // public function findByNextEvent() {
+    //     $criteria = Criteria::create()
+    //     ->where(Criteria::expr()->gte("date", new \DateTime('now')))
+    //     ->orderBy(array("date" => Criteria::ASC))
+    //     ->setMaxResults(1);
+
+    //     return $this->getEvent()->matching($criteria);
+    // }
+    
+    public function findOneByNextDate(): ?Event
     {
         return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
+            ->orderBy('e.date', 'ASC')
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+    
 }

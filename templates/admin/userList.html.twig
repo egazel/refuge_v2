@@ -14,8 +14,8 @@
         <script src="/js/bootstrap.min.js"></script>
         <script src="https://kit.fontawesome.com/6576995845.js" crossorigin="anonymous"></script>
 
-        {% include "partials/admin_header.html.twig" %}
 
+        {% include "partials/admin_header.html.twig" %}
     </head>
     <body>
         <h1 class="text-center mt-5">Liste des utilisateurs</h1>
@@ -26,65 +26,40 @@
                     <table class="table table-striped">
                     <thead>
                         <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                        <th scope="col">Handle</th>
-                        <th scope="col">Handle</th>
-                        <th scope="col">Handle</th>
-                        <th scope="col">Handle</th>
-
-
+                            <th scope="col">id</th>
+                            <th scope="col">Mail</th>
+                            <th scope="col">Rôle</th>
+                            <th scope="col"></th>
+                            <th scope="col">Edition</th>
+                            {# <th scope="col">Handle</th>
+                            <th scope="col">Handle</th>
+                            <th scope="col">Handle</th> #}
                         </tr>
                     </thead>
                     <tbody>
+                    {% for user in users %}
                         <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>
-                            <button class="btn btn-warning"  data-toggle="modal" data-target="#editUserModalForm"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-danger"  data-toggle="modal" data-target="#deleteUserModalForm"><i class="fas fa-trash"></i></button>
-                        </td>
+                            <th scope="row">{{user.id}}</th>
+                            <td>{{user.email}}</td>
+                            <td>{{user.roles[0]}}</td>
+                            <td></td>
+                            <td>
+                                <button class="btn btn-warning"  data-toggle="modal" data-target="#editUserModalForm"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-danger"  data-toggle="modal" data-target="#deleteUserModalForm"><i class="fas fa-trash"></i></button>
+                            </td>
                         </tr>
+                    {% else %}
                         <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                          <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>
-                            <button class="btn btn-warning"  data-toggle="modal" data-target="#editUserModalForm"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-danger"  data-toggle="modal" data-target="#deleteUserModalForm"><i class="fas fa-trash"></i></button>
-                        </td>
+                            <th scope="row">1</th>
+                            <td> No users found ! </td>
                         </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>
-                            <button class="btn btn-warning"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                        </td>
-                        </tr>
+                    {% endfor %}
                     </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </body>
-
     <div class="modal fade" id="editUserModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -100,7 +75,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Sauvegarder</button>
+                    <button type="submit" class="btn btn-primary">Sauvegarder</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                 </div>
             </div>

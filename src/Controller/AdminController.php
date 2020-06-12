@@ -12,9 +12,11 @@ class AdminController extends AbstractController
      */
     public function index()
     {
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
-        ]);
+        $nextEvent = $this->getDoctrine()->getRepository('App:Event')->findOneByNextDate();
+        $donations = $this->getDoctrine()->getRepository('App:Donation')->findThreeByLatest();
+        return $this->render('admin/index.html.twig',
+        ['nextEvent' => $nextEvent, 'donations' => $donations],
+        );
     }
 
     /** 
@@ -22,9 +24,10 @@ class AdminController extends AbstractController
     */
     public function animalList()
     {
-        return $this->render('admin/animalList.html.twig', [
-            'controller_namer' => 'AdminController',
-        ]);
+        $animals = $this->getDoctrine()->getRepository('App:Animal')->findAll();
+
+        return $this->render('admin/animalList.html.twig', 
+        ['animals' => $animals]);
     }
 
     /** 
@@ -32,9 +35,10 @@ class AdminController extends AbstractController
     */
     public function userList()
     {
-        return $this->render('admin/userList.html.twig', [
-            'controller_namer' => 'AdminController',
-        ]);
+        $users = $this->getDoctrine()->getRepository('App:User')->findAll();
+
+        return $this->render('admin/userList.html.twig', 
+        ['users' => $users]);
     }
 
     /** 
@@ -42,9 +46,10 @@ class AdminController extends AbstractController
     */
     public function eventList()
     {
-        return $this->render('admin/eventList.html.twig', [
-            'controller_namer' => 'AdminController',
-        ]);
+        $events = $this->getDoctrine()->getRepository('App:Event')->findAll();
+        
+        return $this->render('admin/eventList.html.twig', 
+        ['events' => $events]);
     }
 
     /** 
@@ -52,9 +57,10 @@ class AdminController extends AbstractController
     */
     public function donationsList()
     {
-        return $this->render('admin/donationsList.html.twig', [
-            'controller_namer' => 'AdminController',
-        ]);
+        $donations = $this->getDoctrine()->getRepository('App:Donation')->findAll();
+
+        return $this->render('admin/donationsList.html.twig', 
+        ['donations' => $donations],);
     }
 
     /** 

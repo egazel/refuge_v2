@@ -17,15 +17,15 @@ class AuthenticationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/admin", name="admin")
-     */
-    public function admin()
-    {
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AuthenticationController',
-        ]);
-    }
+    // /**
+    //  * @Route("/admin", name="admin")
+    //  */
+    // public function admin()
+    // {
+    //     return $this->render('admin/index.html.twig', [
+    //         'controller_name' => 'AuthenticationController',
+    //     ]);
+    // }
 
     /**
      * @Route("/FA", name="FA")

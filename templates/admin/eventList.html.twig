@@ -32,30 +32,23 @@
                     <thead>
                         <tr>
                         <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Lieu</th>
                         </tr>
                     </thead>
                     <tbody>
+                    {% for event in events %}
                         <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                            <th scope="row">{{event.id }}</th>
+                            <td>{{ event.date.format('d/m/Y - h:m') }}</td>
+                            <td>{{ event.location }}</td>
                         </tr>
+                    {% else %}
                         <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
+                            <th scope="row">1</th>
+                            <td> No event found ! </td>
                         </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        </tr>
+                    {% endfor %}
                     </tbody>
                     </table>
                 </div>
@@ -76,7 +69,7 @@
                     <form>
                         <div class="form-group">
                             <label for="eventDate">Date</label>
-                            <input type="date" class="form-control" id="eventDate">
+                            <input type="datetime-local" class="form-control" id="eventDate">
                         </div>
 
                         <div class="form-group">

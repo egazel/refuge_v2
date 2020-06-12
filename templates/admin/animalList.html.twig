@@ -31,58 +31,42 @@
                     <table class="table table-striped">
                     <thead>
                         <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                        <th scope="col">Handle</th>
-                        <th scope="col">Handle</th>
-                        <th scope="col">Handle</th>
-                        <th scope="col">Handle</th>
-
+                            <th scope="col">#</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Sexe</th>
+                            <th scope="col">Prix</th>
+                            <th scope="col">Date d'ajout</th>
+                            <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
+                    {% for animal in animals %}
                         <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
+                        <th scope="row">{{animal.id}}</th>
+                        <td>{{animal.type}}</td>
+                        <td>{{animal.name}}</td>
+                        <td>{{animal.age}}</td>
+                        <td>{{animal.sex}}</td>
+                        <td>{{animal.adoptionPrice}} €</td>
+                        <td>{{animal.dateAdd.format('d/m/Y') }}</td>
                         <td>
                             <button class="btn btn-warning" data-toggle="modal" data-target="#editAnimalModalForm"><i class="fas fa-edit"></i></button>
                             <button class="btn btn-danger" data-toggle="modal" data-target="#deleteAnimalModalForm"><i class="fas fa-trash"></i></button>
                         </td>
-
-                        </tr>
+                    {% else %}
                         <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>
-                            <button class="btn btn-warning"  data-toggle="modal" data-target="#editAnimalModalForm"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteAnimalModalForm"><i class="fas fa-trash"></i></button>
-                        </td>
+                            <th scope="row">Aucun animal pour le moment !</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>
-                            <button class="btn btn-warning" data-toggle="modal" data-target="#editAnimalModalForm"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteAnimalModalForm"><i class="fas fa-trash"></i></button>
-                        </td>
-                        </tr>
+                    {% endfor %}
                     </tbody>
                     </table>
                 </div>
@@ -228,7 +212,6 @@
                         <div class="mt-3 text-center">
                             <button type="submit" class="btn btn-primary m-*-auto">Editer</button>
                         </div>
-                        {# TODO  Ajouter en auto is_hosted=false, gestion de la race (selection dropdown list + création si pas dans la liste)#}
                     </form>
                 </div>
             </div>

@@ -54,4 +54,8 @@ class Event
 
         return $this;
     }
+
+    public function getEvent() {
+        return $this;
+    }
 }

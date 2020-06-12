@@ -35,11 +35,15 @@
                 <div class="col-sm-4">
                     <div class="card" style="height:27rem">
                         <div class="card-header">
-                            <i class="far fa-calendar-alt"></i>                            
-                            Prochain événement :
-                            XX/XX/XXXX - Lieu de l'event
+                            <i class="far fa-calendar-alt"></i>   
+                            
+                            Prochain événement :<br>
+                            {{ nextEvent.date.format('d/m/Y - h:m') }}<br>
+                            {{ nextEvent.location }}
                         </div>
                         <ul class="list-group list-group-flush"  style="overflow:auto;">
+                            {# TODO : Handle members participating once ORM done #}
+
                             <li class="list-group-item">John Doe</li>
                             <li class="list-group-item">John Doe</li>
                             <li class="list-group-item">John Doe</li>
@@ -59,6 +63,7 @@
                             Plus gros donateurs
                         </div>
                         <ul class="list-group list-group-flush">
+                            {# TODO : Handle total by user display once ORM done #}
                             <li class="list-group-item">1. Username - Total amount $</li>
                             <li class="list-group-item">2. Username - Total amount $</li>
                             <li class="list-group-item">3. Username - Total amount $</li>
@@ -71,9 +76,12 @@
                             Derniers dons
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Date, Username - Amount $</li>
-                            <li class="list-group-item">Date, Username - Amount $</li>
-                            <li class="list-group-item">Date, Username - Amount $</li>
+                            {% for donation in donations %}
+                                {# TODO : Handle username display once ORM done #}
+                                <li class="list-group-item">{{donation.date.format('d/m/Y')}} - {{donation.amount}}€</li>
+                            {% else %}
+                                <li class="list-group-item">Pas de donations pour le moment !</li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>

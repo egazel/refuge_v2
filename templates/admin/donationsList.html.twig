@@ -26,30 +26,26 @@
                     <thead>
                         <tr>
                         <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Montant</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Donateur</th>
                         </tr>
                     </thead>
                     <tbody>
+                    {% for donation in donations %}
                         <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                            <th scope="row">{{donation.id}}</th>
+                            <td>{{donation.amount}}</td>
+                            <td>{{donation.date}}</td>
                         </tr>
+                    {% else %}
                         <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
+                            <th scope="row">No donations yet !</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        </tr>
+                    {% endfor %}
                     </tbody>
                     </table>
                 </div>
