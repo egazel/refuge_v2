@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +24,16 @@ class Gerant
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="gerant")
+     */
+    private $eventsOrganized;
+
+    public function __construct()
+    {
+        $this->eventsOrganized = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +47,37 @@ class Gerant
     public function setUser(User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEventsOrganized(): Collection
+    {
+        return $this->eventsOrganized;
+    }
+
+    public function addEventsOrganized(Event $eventsOrganized): self
+    {
+        if (!$this->eventsOrganized->contains($eventsOrganized)) {
+            $this->eventsOrganized[] = $eventsOrganized;
+            $eventsOrganized->setGerant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventsOrganized(Event $eventsOrganized): self
+    {
+        if ($this->eventsOrganized->contains($eventsOrganized)) {
+            $this->eventsOrganized->removeElement($eventsOrganized);
+            // set the owning side to null (unless already changed)
+            if ($eventsOrganized->getGerant() === $this) {
+                $eventsOrganized->setGerant(null);
+            }
+        }
 
         return $this;
     }
