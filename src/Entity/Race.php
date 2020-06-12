@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +23,16 @@ class Race
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Animal", mappedBy="race")
+     */
+    private $animalsWithRace;
+
+    public function __construct()
+    {
+        $this->animalsWithRace = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +46,37 @@ class Race
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Animal[]
+     */
+    public function getAnimalsWithRace(): Collection
+    {
+        return $this->animalsWithRace;
+    }
+
+    public function addAnimalsWithRace(Animal $animalsWithRace): self
+    {
+        if (!$this->animalsWithRace->contains($animalsWithRace)) {
+            $this->animalsWithRace[] = $animalsWithRace;
+            $animalsWithRace->setRace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimalsWithRace(Animal $animalsWithRace): self
+    {
+        if ($this->animalsWithRace->contains($animalsWithRace)) {
+            $this->animalsWithRace->removeElement($animalsWithRace);
+            // set the owning side to null (unless already changed)
+            if ($animalsWithRace->getRace() === $this) {
+                $animalsWithRace->setRace(null);
+            }
+        }
 
         return $this;
     }
