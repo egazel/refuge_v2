@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,6 +19,12 @@ class Animal
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min=3,
+     *      max=50,
+     *      minMessage="Choisissez un nom d'au moins 3 caractères",
+     *      maxMessage="Choisissez un nom de moins de 50 caractères"
+     * )
      */
     private $name;
 

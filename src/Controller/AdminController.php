@@ -7,9 +7,11 @@ use App\Entity\Animal;
 use App\Form\AnimalType;
 use App\Form\RegistrationFormType;
 use App\Repository\AnimalRepository;
+use App\Repository\GerantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -38,13 +40,19 @@ class AdminController extends AbstractController
     * @IsGranted("ROLE_ADMIN")
     * @Route("/admin/animalList", name="animalList")
     */
-    public function animalList(AnimalRepository $animalRepository, Request $request, EntityManagerInterface $entityManager)
+    public function animalList(GerantRepository $gerantRepository, AnimalRepository $animalRepository, Request $request, EntityManagerInterface $entityManager)
     {
         $animal = new Animal();
+        $gerant = $gerantRepository->findOneByUser($this->getUser());
         $addAnimalForm = $this->createForm(AnimalType::class, $animal);
         $addAnimalForm->handleRequest($request);
-        
+        $isModalValid;
+
         if ($addAnimalForm->isSubmitted() && $addAnimalForm->isValid()) {
+            $isModalValid = true;
+            $animal->setGerant($gerant);
+            $animal->setIsHosted(false);
+            $animal->setDateAdd(new \DateTime('now'));
             $entityManager->persist($animal);
             $entityManager->flush();
             $this->addFlash(
@@ -54,10 +62,12 @@ class AdminController extends AbstractController
             $animal = new Animal();
             $addAnimalForm = $this->createForm(AnimalType::class, $animal);
             $this->redirectToRoute('animalList', ['addAnimalForm' => $addAnimalForm->createView()]);
+        } else {
+            $isModalValid = false;
         }
         $animals = $animalRepository->findAll();
         return $this->render('admin/animalList.html.twig', 
-            ['animals' => $animals, 'addAnimalForm' => $addAnimalForm->createView()]);
+            ['animals' => $animals, 'addAnimalForm' => $addAnimalForm->createView(), 'isModalValid' => $isModalValid]);
     }
 
     /** 
