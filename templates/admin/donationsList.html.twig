@@ -35,8 +35,9 @@
                     {% for donation in donations %}
                         <tr>
                             <th scope="row">{{donation.id}}</th>
-                            <td>{{donation.amount}}</td>
-                            <td>{{donation.date}}</td>
+                            <td>{{donation.amount}}€</td>
+                            <td>{{donation.date.format('d/m/Y')}}</td>
+                            <td>{user.name}</td>
                         </tr>
                     {% else %}
                         <tr>
