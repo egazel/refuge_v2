@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,6 +53,16 @@ class FA
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Animal", mappedBy="FA")
+     */
+    private $animalsHosted;
+
+    public function __construct()
+    {
+        $this->animalsHosted = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -137,6 +149,37 @@ class FA
     public function setUser(User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Animal[]
+     */
+    public function getAnimalsHosted(): Collection
+    {
+        return $this->animalsHosted;
+    }
+
+    public function addAnimalsHosted(Animal $animalsHosted): self
+    {
+        if (!$this->animalsHosted->contains($animalsHosted)) {
+            $this->animalsHosted[] = $animalsHosted;
+            $animalsHosted->setFA($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimalsHosted(Animal $animalsHosted): self
+    {
+        if ($this->animalsHosted->contains($animalsHosted)) {
+            $this->animalsHosted->removeElement($animalsHosted);
+            // set the owning side to null (unless already changed)
+            if ($animalsHosted->getFA() === $this) {
+                $animalsHosted->setFA(null);
+            }
+        }
 
         return $this;
     }

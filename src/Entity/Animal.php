@@ -81,6 +81,22 @@ class Animal
      */
     private $isHosted;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\FA", inversedBy="animalsHosted")
+     */
+    private $FA;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Membre", inversedBy="animalsAdopted")
+     */
+    private $member;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Gerant")
+     */
+    private $gerant;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -241,4 +257,42 @@ class Animal
 
         return $this;
     }
+
+    public function getFA(): ?FA
+    {
+        return $this->FA;
+    }
+
+    public function setFA(?FA $FA): self
+    {
+        $this->FA = $FA;
+
+        return $this;
+    }
+
+    public function getMember(): ?Membre
+    {
+        return $this->member;
+    }
+
+    public function setMember(?Membre $member): self
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
+    public function getGerant(): ?Gerant
+    {
+        return $this->gerant;
+    }
+
+    public function setGerant(?Gerant $gerant): self
+    {
+        $this->gerant = $gerant;
+
+        return $this;
+    }
+
+
 }
