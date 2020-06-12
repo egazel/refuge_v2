@@ -2,12 +2,21 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
+use App\Entity\Animal;
+use App\Form\AnimalType;
+use App\Form\RegistrationFormType;
+use App\Repository\AnimalRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
 {
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin", name="admin")
      */
     public function index()
@@ -26,17 +35,33 @@ class AdminController extends AbstractController
     }
 
     /** 
+    * @IsGranted("ROLE_ADMIN")
     * @Route("/admin/animalList", name="animalList")
     */
-    public function animalList()
+    public function animalList(AnimalRepository $animalRepository, Request $request, EntityManagerInterface $entityManager)
     {
-        $animals = $this->getDoctrine()->getRepository('App:Animal')->findAll();
-
+        $animal = new Animal();
+        $addAnimalForm = $this->createForm(AnimalType::class, $animal);
+        $addAnimalForm->handleRequest($request);
+        
+        if ($addAnimalForm->isSubmitted() && $addAnimalForm->isValid()) {
+            $entityManager->persist($animal);
+            $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'L\'animal a bien été ajouté !'
+            );
+            $animal = new Animal();
+            $addAnimalForm = $this->createForm(AnimalType::class, $animal);
+            $this->redirectToRoute('animalList', ['addAnimalForm' => $addAnimalForm->createView()]);
+        }
+        $animals = $animalRepository->findAll();
         return $this->render('admin/animalList.html.twig', 
-        ['animals' => $animals]);
+            ['animals' => $animals, 'addAnimalForm' => $addAnimalForm->createView()]);
     }
 
     /** 
+    * @IsGranted("ROLE_ADMIN")
     * @Route("/admin/userList", name="userList")
     */
     public function userList()
@@ -48,6 +73,7 @@ class AdminController extends AbstractController
     }
 
     /** 
+    * @IsGranted("ROLE_ADMIN")
     * @Route("/admin/eventList", name="eventList")
     */
     public function eventList()
@@ -59,6 +85,7 @@ class AdminController extends AbstractController
     }
 
     /** 
+    * @IsGranted("ROLE_ADMIN")
     * @Route("/admin/donationsList", name="donationsList")
     */
     public function donationsList()
@@ -77,6 +104,7 @@ class AdminController extends AbstractController
     }
 
     /** 
+    * @IsGranted("ROLE_ADMIN")
     * @Route("/admin/fosterRequests", name="fosterRequests")
     */
     public function fosterRequests()

@@ -84,7 +84,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    {{ form_start(addAnimalForm) }}
                         <div class="form-group">
                             <label for="animalType">Espèce</label>
                             <input type="text" class="form-control" id="animalType" placeholder="Chien, chat...">
@@ -140,11 +140,12 @@
                             <button type="submit" class="btn btn-primary m-*-auto">Enregistrer l'animal</button>
                         </div>
                         {# TODO  Ajouter en auto is_hosted=false, gestion de la race (selection dropdown list + création si pas dans la liste)#}
-                    </form>
+                    {{ form_end(addAnimalForm) }}
                 </div>
             </div>
         </div>
     </div>
+
 
 
     <div class="modal fade" id="editAnimalModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -157,7 +158,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
                         <div class="form-group">
                             <label for="animalType">Espèce</label>
                             <input type="text" class="form-control" id="animalType" placeholder="Chien, chat...">
@@ -212,7 +212,6 @@
                         <div class="mt-3 text-center">
                             <button type="submit" class="btn btn-primary m-*-auto">Editer</button>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>

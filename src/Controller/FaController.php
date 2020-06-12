@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FaController extends AbstractController
 {
     /**
+     * @IsGranted("ROLE_FA")
      * @Route("/fa", name="fa")
      */
     public function index()
@@ -18,6 +20,7 @@ class FaController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_FA")
      * @Route("/fa/hostAnimal", name="hostAnimal")
      */
     public function hostAnimal()
@@ -28,6 +31,7 @@ class FaController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_FA")
      * @Route("/fa/eventsToCome", name="FAeventsToCome")
      */
     public function FAeventsToCome()
@@ -38,6 +42,7 @@ class FaController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_FA")
      * @Route("/fa/makeDonation", name="FAmakeDonation")
      */
     public function FAmakeDonation()

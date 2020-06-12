@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MemberController extends AbstractController
 {
     /**
+     * @IsGranted("ROLE_MEMBER")
      * @Route("/member", name="member")
      */
     public function index()
@@ -18,6 +20,7 @@ class MemberController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_MEMBER")
      * @Route("/member/animalsToAdopt", name="animalsToAdopt")
      */
     public function animalsToAdopt()
@@ -28,6 +31,7 @@ class MemberController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_MEMBER")
      * @Route("/member/eventsToCome", name="eventsToCome")
      */
     public function eventsToCome()
@@ -38,6 +42,7 @@ class MemberController extends AbstractController
     }
 
      /**
+      * @IsGranted("ROLE_MEMBER")
      * @Route("/member/makeDonation", name="makeDonation")
      */
     public function makeDonation()
