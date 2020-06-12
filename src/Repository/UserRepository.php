@@ -35,8 +35,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->persist($user);
         $this->_em->flush();
     }
-
-    public function findByDonatingMemberId($memberId)
+    // TODO Fix this function (doesn't work)
+    public function findByMemberId($memberId)
     {
         return $this->createQueryBuilder('u')
         ->andWhere('u.id = :val')

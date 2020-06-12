@@ -13,9 +13,15 @@ class AdminController extends AbstractController
     public function index()
     {
         $nextEvent = $this->getDoctrine()->getRepository('App:Event')->findOneByNextDate();
+        $participatingMembers = $nextEvent->getParticipatingMembers();
+        $participatingUsersMail = [];
+        for ($i=0; $i<count($participatingMembers); $i++){
+            array_push($participatingUsersMail, $participatingMembers[$i]->getUser()->getEmail());
+        }
+     
         $donations = $this->getDoctrine()->getRepository('App:Donation')->findThreeByLatest();
         return $this->render('admin/index.html.twig',
-        ['nextEvent' => $nextEvent, 'donations' => $donations],
+        ['nextEvent' => $nextEvent, 'participatingUsers' => $participatingUsersMail, 'donations' => $donations,],
         );
     }
 
@@ -62,7 +68,7 @@ class AdminController extends AbstractController
         foreach ($donations as $don) {
          
             $donatingMemberId= $don->memberDonating->getId();
-            $userCorresponding = $this->getDoctrine()->getRepository('App:User')->findByDonatingMemberId($donatingMemberId);
+            $userCorresponding = $this->getDoctrine()->getRepository('App:User')->findByMemberId($donatingMemberId);
             $mail = $userCorresponding[0]->getEmail();
             array_push($donationMailsArray, $mail);
         }

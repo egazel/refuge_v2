@@ -42,17 +42,10 @@
                             {{ nextEvent.location }}
                         </div>
                         <ul class="list-group list-group-flush"  style="overflow:auto;">
-                            {# TODO : Handle members participating once ORM done #}
-
-                            <li class="list-group-item">John Doe</li>
-                            <li class="list-group-item">John Doe</li>
-                            <li class="list-group-item">John Doe</li>
-                            <li class="list-group-item">John Doe</li>
-                            <li class="list-group-item">John Doe</li>
-                            <li class="list-group-item">John Doe</li>
-                            <li class="list-group-item">John Doe</li>                            
-                            <li class="list-group-item">John Doe</li>
-                            <li class="list-group-item">John Doe</li>
+                            {% for user in participatingUsers %}
+                            <li class="list-group-item">{{user}}</li>
+                            {% endfor %}
+                            <li></li>
                         </ul>
                     </div>
                 </div>
