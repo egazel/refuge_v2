@@ -46,24 +46,25 @@ class AdminController extends AbstractController
         $gerant = $gerantRepository->findOneByUser($this->getUser());
         $addAnimalForm = $this->createForm(AnimalType::class, $animal);
         $addAnimalForm->handleRequest($request);
-        $isModalValid;
+        $isModalValid = true;
 
-        if ($addAnimalForm->isSubmitted() && $addAnimalForm->isValid()) {
-            $isModalValid = true;
-            $animal->setGerant($gerant);
-            $animal->setIsHosted(false);
-            $animal->setDateAdd(new \DateTime('now'));
-            $entityManager->persist($animal);
-            $entityManager->flush();
-            $this->addFlash(
-                'success',
-                'L\'animal a bien été ajouté !'
-            );
-            $animal = new Animal();
-            $addAnimalForm = $this->createForm(AnimalType::class, $animal);
-            $this->redirectToRoute('animalList', ['addAnimalForm' => $addAnimalForm->createView()]);
-        } else {
-            $isModalValid = false;
+        if ($addAnimalForm->isSubmitted()) {
+            if ($addAnimalForm->isValid()){
+                $animal->setGerant($gerant);
+                $animal->setIsHosted(false);
+                $animal->setDateAdd(new \DateTime('now'));
+                $entityManager->persist($animal);
+                $entityManager->flush();
+                $this->addFlash(
+                    'success',
+                    'L\'animal a bien été ajouté !'
+                );
+                $animal = new Animal();
+                $addAnimalForm = $this->createForm(AnimalType::class, $animal);
+                $this->redirectToRoute('animalList', ['addAnimalForm' => $addAnimalForm->createView()]);
+            } else {
+                $isModalValid = false;
+            }
         }
         $animals = $animalRepository->findAll();
         return $this->render('admin/animalList.html.twig', 
