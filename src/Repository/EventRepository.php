@@ -37,7 +37,7 @@ class EventRepository extends ServiceEntityRepository
     }
     */
 
-
+ 
     public function findOneByNextDate(): ?Event
     {
         return $this->createQueryBuilder('e')
