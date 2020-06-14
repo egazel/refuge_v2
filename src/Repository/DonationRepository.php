@@ -35,8 +35,19 @@ class DonationRepository extends ServiceEntityRepository
         ;
     }
     */
-  
-    
+
+    public function getThreeHighestDonors()
+    {
+        return $this->createQueryBuilder('d')
+            ->select('d.member_donating_id', 'sum(d.amount)')
+            ->groupBy('d.member_donating_id')
+            ->orderBy('d.amount','DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function findThreeByLatest()
     {
         return $this->createQueryBuilder('d')

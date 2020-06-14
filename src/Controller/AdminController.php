@@ -29,8 +29,16 @@ class AdminController extends AbstractController
      * @Route("/admin", name="admin")
      */
     // TODO Sortir un max de services des fonctions
-    public function index(EventRepository $eventRepository, MembreRepository $membreRepository, FARepository $FARepository, UserRepository $userRepository)
+    public function index(DonationRepository $donationRepository, EventRepository $eventRepository, MembreRepository $membreRepository, FARepository $FARepository, UserRepository $userRepository)
     {
+
+        $donors = $donationRepository->getThreeHighestDonors();
+        $donorsMail = [];
+        $donorsAmount = [];
+        for ($i=0; $i < count($donors); $i++){
+           $tmp = $userRepository->findByMemberId($donors[$i]['member_donating_id']);
+           array_push($donorsMail, $tmp[0]->getEmail());
+        }
         $nextEvent = $eventRepository->findOneByNextDate();
         $participatingMembers = [];
         if ($nextEvent != null){
@@ -46,13 +54,14 @@ class AdminController extends AbstractController
         for ($i=0; $i<count($participatingMembers); $i++){
             array_push($participatingUsersMail, $participatingMembers[$i]->getUser()->getEmail());
         }
-     
         $donations = $this->getDoctrine()->getRepository('App:Donation')->findThreeByLatest();
         return $this->render('admin/index.html.twig',
         ['nextEvent' => $nextEvent, 'participatingUsers' => $participatingUsersMail,
          'donations' => $donations,
          'percentageOfMembers' => $percentageOfMembers,
-         'percentageOfFA' => $percentageOfFA],
+         'percentageOfFA' => $percentageOfFA,
+         'donors' => $donors,
+         'donorsMail' => $donorsMail]
         );
     }
 

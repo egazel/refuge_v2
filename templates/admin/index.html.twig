@@ -57,10 +57,11 @@
                             Plus gros donateurs
                         </div>
                         <ul class="list-group list-group-flush">
-                            {# TODO : Handle total by user display once ORM done #}
-                            <li class="list-group-item">1. Username - Total amount $</li>
-                            <li class="list-group-item">2. Username - Total amount $</li>
-                            <li class="list-group-item">3. Username - Total amount $</li>
+                            {% for i in 0..donors|length-1 %}
+                                {% if donors|length > 0 %}
+                                    <li class="list-group-item">1. {{donorsMail[i]}} - {{donors[i].1}} $</li>
+                                {% endif %}
+                            {% endfor %}
                         </ul>
                     </div>
 
@@ -71,7 +72,6 @@
                         </div>
                         <ul class="list-group list-group-flush">
                             {% for donation in donations %}
-                                {# TODO : Handle username display once ORM done #}
                                 <li class="list-group-item">{{donation.date.format('d/m/Y')}} - {{donation.amount}}€</li>
                             {% else %}
                                 <li class="list-group-item">Pas de donations pour le moment !</li>
