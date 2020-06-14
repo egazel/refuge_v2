@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Membre;
 use Symfony\Component\Form\Form;
 use App\Form\RegistrationFormType;
+use App\Repository\MembreRepository;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +23,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(ValidatorInterface $validator, GoogleAuthenticatorInterface $googleAuthenticatorInterface, Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function register(ValidatorInterface $validator, GoogleAuthenticatorInterface $googleAuthenticatorInterface, Request $request, UserPasswordEncoderInterface $passwordEncoder, MembreRepository $membreRepository): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -76,9 +78,12 @@ class RegistrationController extends AbstractController
                 
                 $user->setRoles(["ROLE_MEMBER"]);
                 
-
+                $membre = new Membre();
+                $membre->setUser($user);
+                
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
+                $entityManager->persist($membre);
                 $entityManager->flush();
 
                 // do anything else you need here, like send an email

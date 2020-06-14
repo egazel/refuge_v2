@@ -31,17 +31,21 @@
                             <i class="far fa-calendar-alt"></i>   
                             
                             Prochain événement :<br>
-                            {{ nextEvent.date.format('d/m/Y - h:m') }}<br>
-                            {{ nextEvent.location }}
+                            {% if nextEvent %}
+                                {{ nextEvent.date.format('d/m/Y - h:m') }}<br>
+                                {{ nextEvent.location }}
+                            {% else %}
+                                Aucun
+                            {% endif %}
                         </div>
                         <ul class="list-group list-group-flush"  style="overflow:auto;">
-                            {% for user in participatingUsers %}
-                                {% if participatingUsers %}
+                            {% if participatingUsers|length > 0 %}
+                                {% for user in participatingUsers %}
                                     <li class="list-group-item">{{user}}</li>
-                                {% else %}
+                                {% endfor %}
+                            {% else %}
                                     <li class="list-group-item">Aucun participants !</li>
-                                {% endif %}
-                            {% endfor %}
+                            {% endif %}
                             <li></li>
                         </ul>
                     </div>

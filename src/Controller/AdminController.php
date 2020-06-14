@@ -32,7 +32,10 @@ class AdminController extends AbstractController
     public function index(EventRepository $eventRepository, MembreRepository $membreRepository, FARepository $FARepository, UserRepository $userRepository)
     {
         $nextEvent = $eventRepository->findOneByNextDate();
-        $participatingMembers = $nextEvent->getParticipatingMembers();
+        $participatingMembers = [];
+        if ($nextEvent != null){
+            $participatingMembers = $nextEvent->getParticipatingMembers();
+        }
         $participatingUsersMail = [];
 
         $isModalValid = true;
