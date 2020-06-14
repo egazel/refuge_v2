@@ -1,5 +1,7 @@
 <link rel="icon" href="/img/favicon-32x32.png" />
 <link rel="stylesheet" href="/css/dashboards.css"/>
+<link rel="stylesheet" href="css/addons/datatables.min.css">
+<script src="/js/addons/datatables.min.js"></script>
 
 <nav class="navbar navbar-expand-lg navbar-light navColor shadow">
     <a class="navbar-brand hvr-icon-spin hvr-grow" href="{{ path('admin') }}">
@@ -21,12 +23,6 @@
                 <a class="nav-link hvr-icon-pulse-grow" href="{{ path('userList') }}">
                     <i class="far fa-user-circle text-info hvr-icon"></i>
                     Liste des utilisateurs
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link hvr-icon-pulse-grow" href="{{ path('fosterRequests') }}">
-                    <i class="fas fa-house-user text-primary hvr-icon"></i>
-                    Demandes de FA
                 </a>
             </li>
             <li class="nav-item">

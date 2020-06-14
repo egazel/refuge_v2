@@ -7,11 +7,9 @@
         <link rel="stylesheet" href="/css/general.css">
         <link rel="stylesheet" href="/css/hover.css">
         <link rel="stylesheet" href="/css/admin.css">
-        <link rel="stylesheet" href="css/addons/datatables.min.css">
         <script src="/js/jquery.min.js"></script>
         <script src="/js/popper.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
-        <script src="/js/addons/datatables.min.js"></script>
 
         <script src="https://kit.fontawesome.com/6576995845.js" crossorigin="anonymous"></script>
 
@@ -24,7 +22,7 @@
             <div class="row">
                 <div class="col-sm mt-4">
                     <div class="text-center">
-                        <button class="btn btn-warning m-*-auto" id="addAnimalButton" data-toggle="modal" data-target="#addAnimalModalForm"><i class="fas fa-plus"></i> Ajouter un animal </button>
+                        <button class="btn btn-warning m-*-auto" data-toggle="modal" data-target="#addAnimalModalForm"><i class="fas fa-plus"></i> Ajouter un animal </button>
                     </div>
                 </div>
             </div>
@@ -60,6 +58,7 @@
                                 <button class="btn btn-warning" id="{{animal.id}}" data-toggle="modal" data-target="#editAnimalModalForm"><i class="fas fa-edit"></i></button>
                                 <button class="btn btn-danger" id="{{animal.id}}" data-toggle="modal" data-target="#deleteAnimalModalForm"><i class="fas fa-trash"></i></button>
                             </td>
+                            </tr>
                         {% else %}
                             <tr>
                                 <th scope="row">Aucun animal pour le moment !</th>

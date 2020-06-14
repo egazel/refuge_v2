@@ -23,14 +23,14 @@
 
             <div class="row mt-5">
                 <div class="col-sm">
-                    <table class="table table-striped">
+                    <table id="selectedColumn" class="table table-striped table-sm" cellspacing="0">
                     <thead>
                         <tr>
-                            <th scope="col">id</th>
-                            <th scope="col">Mail</th>
-                            <th scope="col">Rôle</th>
+                            <th scope="col"><i class="fas fa-sort"></i> #</th>
+                            <th scope="col"><i class="fas fa-sort"></i> Mail</th>
+                            <th scope="col"><i class="fas fa-sort"></i> Rôle</th>
                             <th scope="col"></th>
-                            <th scope="col">Edition</th>
+                            <th scope="col"><i class="fas fa-sort"></i> Edition</th>
                             {# <th scope="col">Handle</th>
                             <th scope="col">Handle</th>
                             <th scope="col">Handle</th> #}
@@ -43,7 +43,7 @@
                             <td>{{user.email}}</td>
                             <td>{{user.roles[0]}}</td>
                             <td></td>
-                            <td>
+                            <td style="flex-direction:row;">
                                 <button class="btn btn-warning"  data-toggle="modal" data-target="#editUserModalForm"><i class="fas fa-edit"></i></button>
                                 <button class="btn btn-danger"  data-toggle="modal" data-target="#deleteUserModalForm"><i class="fas fa-trash"></i></button>
                             </td>
@@ -103,3 +103,12 @@
     </div>
 </html>
 {% endif %}
+<script>
+    $(document).ready(function () {
+$('#selectedColumn').DataTable({
+"scrollY": "350px",
+"scrollCollapse": true,
+});
+$('.dataTables_length').addClass('bs-select');
+});
+</script>

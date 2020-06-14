@@ -51,6 +51,11 @@ class User implements UserInterface, TwoFactorInterface
      */
     private $usual_browser;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $registerDate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -186,5 +191,17 @@ class User implements UserInterface, TwoFactorInterface
         return $this->email;
         // to show the id of the Category in the select
         // return $this->id;
+    }
+
+    public function getRegisterDate(): ?\DateTimeInterface
+    {
+        return $this->registerDate;
+    }
+
+    public function setRegisterDate(?\DateTimeInterface $registerDate): self
+    {
+        $this->registerDate = $registerDate;
+
+        return $this;
     }
 }

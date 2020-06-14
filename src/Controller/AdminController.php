@@ -155,15 +155,4 @@ class AdminController extends AbstractController
         return $this->render('admin/donationsList.html.twig', 
         ['donations' => $donations, 'donationsIds' => $donationMailsArray],);
     }
-
-    /** 
-    * @IsGranted("ROLE_ADMIN")
-    * @Route("/admin/fosterRequests", name="fosterRequests")
-    */
-    public function fosterRequests()
-    {
-        return $this->render('admin/fosterRequests.html.twig', [
-            'controller_namer' => 'AdminController',
-        ]);
-    }
 }
