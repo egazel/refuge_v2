@@ -151,7 +151,6 @@
                         <div class="mt-3 text-center">
                             <button type="submit" class="btn btn-primary m-*-auto">Enregistrer l'animal</button>
                         </div>
-                        {# TODO  Add gestion de la race (selection dropdown list + création si pas dans la liste)#}
                     {{ form_end(addAnimalForm) }}
                 </div>
             </div>
@@ -276,9 +275,10 @@
 {% endif %}
 <script>
     $(document).ready(function () {
-        $('#selectedColumn').DataTable({
-           "order": [[0, "asc"]]
-        });
-        $('.dataTables_length').addClass('bs-select');
-    });
+$('#selectedColumn').DataTable({
+"scrollY": "350px",
+"scrollCollapse": true,
+});
+$('.dataTables_length').addClass('bs-select');
+});
 </script>

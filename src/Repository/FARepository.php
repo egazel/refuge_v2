@@ -19,6 +19,14 @@ class FARepository extends ServiceEntityRepository
         parent::__construct($registry, FA::class);
     }
 
+    public function getTotalFANumber()
+    {
+        return $this->createQueryBuilder('f')
+            ->select('COUNT(f)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
     // /**
     //  * @return FA[] Returns an array of FA objects
     //  */

@@ -7,11 +7,13 @@ use App\Entity\Event;
 use App\Entity\Animal;
 use App\Form\AnimalType;
 use App\Form\AddEventType;
+use App\Repository\FARepository;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Repository\EventRepository;
 use App\Repository\AnimalRepository;
 use App\Repository\GerantRepository;
+use App\Repository\MembreRepository;
 use App\Repository\DonationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,18 +28,28 @@ class AdminController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      * @Route("/admin", name="admin")
      */
-    public function index(EventRepository $eventRepository)
+    // TODO Sortir un max de services des fonctions
+    public function index(EventRepository $eventRepository, MembreRepository $membreRepository, FARepository $FARepository, UserRepository $userRepository)
     {
         $nextEvent = $eventRepository->findOneByNextDate();
         $participatingMembers = $nextEvent->getParticipatingMembers();
         $participatingUsersMail = [];
+
+        $isModalValid = true;
+        $nbOfUsers = $userRepository->getTotalUserNumber();
+        $percentageOfMembers = (($membreRepository->getTotalMembersNumber())/$nbOfUsers)*100;
+        $percentageOfFA =100-$percentageOfMembers;
+
         for ($i=0; $i<count($participatingMembers); $i++){
             array_push($participatingUsersMail, $participatingMembers[$i]->getUser()->getEmail());
         }
      
         $donations = $this->getDoctrine()->getRepository('App:Donation')->findThreeByLatest();
         return $this->render('admin/index.html.twig',
-        ['nextEvent' => $nextEvent, 'participatingUsers' => $participatingUsersMail, 'donations' => $donations,],
+        ['nextEvent' => $nextEvent, 'participatingUsers' => $participatingUsersMail,
+         'donations' => $donations,
+         'percentageOfMembers' => $percentageOfMembers,
+         'percentageOfFA' => $percentageOfFA],
         );
     }
 
@@ -66,7 +78,7 @@ class AdminController extends AbstractController
                 );
                 $animal = new Animal();
                 $addAnimalForm = $this->createForm(AnimalType::class, $animal);
-                $this->redirectToRoute('animalList', ['addAnimalForm' => $addAnimalForm->createView()]);
+                $this->redirectToRoute('animalList', ['addAnimalForm' => $addAnimalForm->createView(), 'isModalValid' => $isModalValid]);
             } else {
                 $isModalValid = false;
             }
@@ -111,7 +123,7 @@ class AdminController extends AbstractController
                     'success',
                     'L\'évenement a bien été enregistré !'
                 );
-                $animal = new Animal();
+                $event = new Event();
                 $addEventForm = $this->createForm(AddEventType::class, $event);
                 $this->redirectToRoute('eventList', ['addEventForm' => $addEventForm->createView()]);
             } else {

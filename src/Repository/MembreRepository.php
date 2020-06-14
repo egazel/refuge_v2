@@ -35,7 +35,14 @@ class MembreRepository extends ServiceEntityRepository
         ;
     }
     */
-
+    public function getTotalMembersNumber()
+    {
+        return $this->createQueryBuilder('m')
+            ->select('COUNT(m)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
     /*
     public function findOneBySomeField($value): ?Membre
     {

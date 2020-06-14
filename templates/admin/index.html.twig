@@ -1,4 +1,3 @@
-{% if is_granted('ROLE_ADMIN') %}
 <html>
     <head>
         <meta charset="UTF-8">
@@ -24,16 +23,10 @@
             <div class="row mt-5">
                 <div class="col-sm-4">
                     <h5 class="text-center"><i class="fas fa-users"></i> Répartition des membres</h5>
-                    <canvas id="doughnutChart"></canvas>
-                    <script src="/js/chart.js"></script>
-
-                    
-                    <h5 class="text-center mt-5"><i class="fas fa-user"></i> Nouveaux utilisateurs</h5>
-                    <canvas id="lineChart"></canvas>
-                    <script src="/js/chart.js"></script>
+                    <canvas id="doughnutChart" style="height:40%; width:40%;"></canvas>
                 </div>
                 <div class="col-sm-4">
-                    <div class="card" style="height:27rem">
+                    <div class="card" style="height:25rem">
                         <div class="card-header">
                             <i class="far fa-calendar-alt"></i>   
                             
@@ -43,7 +36,11 @@
                         </div>
                         <ul class="list-group list-group-flush"  style="overflow:auto;">
                             {% for user in participatingUsers %}
-                            <li class="list-group-item">{{user}}</li>
+                                {% if participatingUsers %}
+                                    <li class="list-group-item">{{user}}</li>
+                                {% else %}
+                                    <li class="list-group-item">Aucun participants !</li>
+                                {% endif %}
                             {% endfor %}
                             <li></li>
                         </ul>
@@ -83,4 +80,20 @@
     </body>
 
 </html>
-{% endif %}
+<script>
+    var ctxP = document.getElementById("doughnutChart").getContext('2d');
+    var myDoughnutChart = new Chart(ctxP, {
+        type: 'doughnut',
+        data: {
+            labels: ["Famille d'accueil", "Membres"],
+            datasets: [{
+                data: [ {{percentageOfFA}} , {{percentageOfMembers}} ],
+                backgroundColor: ["#46BFBD", "#FDB45C"],
+                hoverBackgroundColor: ["#5AD3D1", "#FFC870"]
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+</script>
