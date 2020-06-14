@@ -3,11 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Event;
 use App\Entity\Animal;
 use App\Form\AnimalType;
+use App\Form\AddEventType;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
+use App\Repository\EventRepository;
 use App\Repository\AnimalRepository;
 use App\Repository\GerantRepository;
+use App\Repository\DonationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,9 +26,9 @@ class AdminController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      * @Route("/admin", name="admin")
      */
-    public function index()
+    public function index(EventRepository $eventRepository)
     {
-        $nextEvent = $this->getDoctrine()->getRepository('App:Event')->findOneByNextDate();
+        $nextEvent = $eventRepository->findOneByNextDate();
         $participatingMembers = $nextEvent->getParticipatingMembers();
         $participatingUsersMail = [];
         for ($i=0; $i<count($participatingMembers); $i++){
@@ -75,9 +80,9 @@ class AdminController extends AbstractController
     * @IsGranted("ROLE_ADMIN")
     * @Route("/admin/userList", name="userList")
     */
-    public function userList()
+    public function userList(UserRepository $userRepository)
     {
-        $users = $this->getDoctrine()->getRepository('App:User')->findAll();
+        $users = $userRepository->findAll();
 
         return $this->render('admin/userList.html.twig', 
         ['users' => $users]);
@@ -87,26 +92,48 @@ class AdminController extends AbstractController
     * @IsGranted("ROLE_ADMIN")
     * @Route("/admin/eventList", name="eventList")
     */
-    public function eventList()
+    public function eventList(GerantRepository $gerantRepository, EventRepository $eventRepository, Request $request, EntityManagerInterface $entityManager)
     {
-        $events = $this->getDoctrine()->getRepository('App:Event')->findAll();
-        
+        $events = $eventRepository->findAll();
+        $event = new Event();
+        $gerant = $gerantRepository->findOneByUser($this->getUser());
+
+        $addEventForm = $this->createForm(AddEventType::class, $event);
+        $addEventForm->handleRequest($request);
+        $isModalValid = true;
+
+        if ($addEventForm->isSubmitted()) {
+            if ($addEventForm->isValid()){
+                $event->setGerant($gerant);
+                $entityManager->persist($event);
+                $entityManager->flush();
+                $this->addFlash(
+                    'success',
+                    'L\'évenement a bien été enregistré !'
+                );
+                $animal = new Animal();
+                $addEventForm = $this->createForm(AddEventType::class, $event);
+                $this->redirectToRoute('eventList', ['addEventForm' => $addEventForm->createView()]);
+            } else {
+                $isModalValid = false;
+            }
+        }
         return $this->render('admin/eventList.html.twig', 
-        ['events' => $events]);
+        ['events' => $events, 'addEventForm' => $addEventForm->createView(), 'isModalValid' => $isModalValid]);
     }
 
     /** 
     * @IsGranted("ROLE_ADMIN")
     * @Route("/admin/donationsList", name="donationsList")
     */
-    public function donationsList()
+    public function donationsList(DonationRepository $donationRepository, UserRepository $userRepository)
     {
-        $donations = $this->getDoctrine()->getRepository('App:Donation')->findAll();
+        $donations = $donationRepository->findAll();
         $donationMailsArray = [];
         foreach ($donations as $don) {
          
             $donatingMemberId= $don->memberDonating->getId();
-            $userCorresponding = $this->getDoctrine()->getRepository('App:User')->findByMemberId($donatingMemberId);
+            $userCorresponding = $userRepository->findByMemberId($donatingMemberId);
             $mail = $userCorresponding[0]->getEmail();
             array_push($donationMailsArray, $mail);
         }

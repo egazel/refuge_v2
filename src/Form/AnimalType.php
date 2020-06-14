@@ -65,7 +65,6 @@ class AnimalType extends AbstractType
             ])
             
             // ->add('dateAdd')
-            ->add('fur')
             ->add('needCare', CheckboxType::class, [
                 'label'    => 'Traitement particulier',
                 'required' => false,
@@ -80,13 +79,7 @@ class AnimalType extends AbstractType
                     ]
                 ]
             )
-            // ->add('isHosted')
-            // ->add('gerant')
-
-            // vvv Ce sera des entity type (google moi ça)
-            // ->add('FA')
-            // ->add('member')
-            // ->add('race')
+            ->add('race')
         ;
     }
 

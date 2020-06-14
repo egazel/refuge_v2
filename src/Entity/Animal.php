@@ -17,6 +17,18 @@ class Animal
      */
     private $id;
 
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     * @Assert\Length(
+     *      min=3,
+     *      max=50,
+     *      minMessage="Choisissez un nom d'espèce d'au moins 3 caractères",
+     *      maxMessage="Choisissez un nom d'espèce de moins de 50 caractères"
+     * )
+     */
+    private $type;
+
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(
@@ -38,8 +50,14 @@ class Animal
      */
     private $sex;
 
-    /**
+        /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min=3,
+     *      max=255,
+     *      minMessage="Description d'au moins 3 caractères",
+     *      maxMessage="Description de moins de 255 caractères"
+     * )
      */
     private $description;
 
@@ -69,19 +87,9 @@ class Animal
     private $dateAdd;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $fur;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $needCare;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     */
-    private $type;
 
     /**
      * @ORM\Column(type="boolean")
@@ -222,18 +230,6 @@ class Animal
         return $this;
     }
 
-    public function getFur(): ?string
-    {
-        return $this->fur;
-    }
-
-    public function setFur(?string $fur): self
-    {
-        $this->fur = $fur;
-
-        return $this;
-    }
-
     public function getNeedCare(): ?bool
     {
         return $this->needCare;
@@ -318,5 +314,10 @@ class Animal
         return $this;
     }
 
-
+    public function __toString(){
+        // to show the name of the Category in the select
+        return $this->name;
+        // to show the id of the Category in the select
+        // return $this->id;
+    }
 }

@@ -42,4 +42,5 @@ security:
         - { path: ^/admin, role: ROLE_ADMIN }
         - { path: ^/member, role: ROLE_MEMBER }
         - { path: ^/FA, role: ROLE_FA }
+        # - { path: ^/backend, role: ROLE_SUPER_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
