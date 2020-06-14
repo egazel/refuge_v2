@@ -48,8 +48,13 @@ class AdminController extends AbstractController
 
         $isModalValid = true;
         $nbOfUsers = $userRepository->getTotalUserNumber();
-        $percentageOfMembers = (($membreRepository->getTotalMembersNumber())/$nbOfUsers)*100;
-        $percentageOfFA =100-$percentageOfMembers;
+        if ($nbOfUsers != 0){
+            $percentageOfMembers = (($membreRepository->getTotalMembersNumber())/$nbOfUsers)*100;
+            $percentageOfFA =100-$percentageOfMembers;
+        } else {
+            $percentageOfMembers = 100;
+            $percentageOfFA = 0;
+        }
 
         for ($i=0; $i<count($participatingMembers); $i++){
             array_push($participatingUsersMail, $participatingMembers[$i]->getUser()->getEmail());
@@ -137,6 +142,7 @@ class AdminController extends AbstractController
                 );
                 $event = new Event();
                 $addEventForm = $this->createForm(AddEventType::class, $event);
+                
                 $this->redirectToRoute('eventList', ['addEventForm' => $addEventForm->createView()]);
             } else {
                 $isModalValid = false;

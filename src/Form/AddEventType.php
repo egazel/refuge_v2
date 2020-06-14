@@ -13,7 +13,15 @@ class AddEventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date', DateTimeType::class)
+            ->add('date', DateTimeType::class, array(
+                'required' => true,
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'form-control input-inline datetimepicker',
+                    'data-provide' => 'datetimepicker',
+                    'html5' => false,
+                ],
+            ))
 
             ->add('location')
             // ->add('participatingMembers')

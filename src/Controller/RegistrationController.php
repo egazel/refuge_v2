@@ -78,6 +78,7 @@ class RegistrationController extends AbstractController
                 
                 $user->setRoles(["ROLE_MEMBER"]);
                 
+                $user->setRegisterDate(new \DateTime('now'));
                 $membre = new Membre();
                 $membre->setUser($user);
                 
