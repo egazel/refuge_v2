@@ -45,7 +45,7 @@
                         <tbody>
                         {% for animal in animals %}
                             <tr  scope="row">
-                            <div> <img src={{asset(animal.imageLinks[0])}}></div>
+                            {# <div> <img src={{asset(animal.imageLinks[0])}}></div> #}
                             <th>{{animal.id}}</th>
                             <td>{{animal.type}}</td>
                             <td>{{animal.name}}</td>
