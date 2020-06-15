@@ -57,7 +57,7 @@ class AppFixtures extends Fixture
         for ($i=0; $i<20; $i++){
             $animal = new Animal();
             $animal->setType("Chat");
-            $animal->setName("Animal no.\$i");
+            $animal->setName("Animal no.".$i);
             $animal->setAge(3);
             if ($i%2==0){
                 $animal->setSex("Male");
@@ -69,12 +69,15 @@ class AppFixtures extends Fixture
                 $animal->setOkDogs(false);
                 $animal->setOkKids(false);
             }
-            $animal->setDescription("Description de l'animal \$i");
+            $animal->setDescription("Description de l'animal no.".$i);
             $animal->setOkCats(true);
             $animal->setNeedCare(false);
             $animal->setAdoptionPrice(random_int(0,100));
             $animal->setDateAdd(new \DateTime('now'));
             $animal->setRace($race);
+            $animal->setIsHosted(false);
+            $animal->setGerant($admin);
+
         }
 
         $manager->persist($superAdmin);
