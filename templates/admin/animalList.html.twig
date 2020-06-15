@@ -44,9 +44,10 @@
                         </thead>
                         <tbody>
                         {% for animal in animals %}
+                            {% set i=1 %}
                             <tr  scope="row">
                             {# <div> <img src={{asset(animal.imageLinks[0])}}></div> #}
-                            <th>{{animal.id}}</th>
+                            <th>{{loop.index0 + 1}}</th>
                             <td>{{animal.type}}</td>
                             <td>{{animal.name}}</td>
                             <td>{{animal.race}}</td>
@@ -60,6 +61,7 @@
                                 <button class="btn btn-danger" id="{{animal.id}}" data-toggle="modal" data-id="{{animal.id}}" data-target="#deleteAnimalModalForm"><i class="fas fa-trash"></i></button>
                             </td>
                             </tr>
+                           
                         {% else %}
                             <tr>
                                 <th scope="row">Aucun animal pour le moment !</th>
