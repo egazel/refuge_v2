@@ -1,7 +1,7 @@
 <link rel="icon" href="/img/favicon-32x32.png" />
 <link rel="stylesheet" href="/css/dashboards.css"/>
 
-<nav class="navbar navbar-expand-lg navbar-light navColor shadow">
+<nav class="navbar navbar-expand-lg shadow">
     <a class="navbar-brand hvr-icon-spin hvr-grow" href="{{ path('member') }}">
         <img src="/img/logo.png" alt="" class="hvr-icon rounded-circle shadow img-fluid mt-2 mb-2" style="width: 32px;">
     </a>
@@ -13,7 +13,7 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link hvr-icon-pulse-grow" href="{{ path('animalsToAdopt') }}">
-                    <i class="far fa-paw text-secondary hvr-icon"></i>
+                    <i class="far fa-paw text-primary hvr-icon"></i>
                     Animaux à l'adoption
                 </a>
             </li>
@@ -29,16 +29,22 @@
                     Faire une donation
                 </a>
             </li>
+             <li class="nav-item">
+                <a class="nav-link hvr-icon-pulse-grow" href="{{path('becomeFoster')}}">
+                    <i class="fas text-primary fa-home hvr-icon"></i>
+                    Devenir famille d'accueil
+                </a>
+            </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="nav-item">
                 <a class="nav-link hvr-icon-pulse-grow" href="#">
-                    <i class="far fa-user-circle text-info hvr-icon"></i>
+                    <i class="far fa-user-circle text-warning hvr-icon"></i>
                     Mon profil
                 </a>
             </li>
             <li><a class="nav-link hvr-icon-wobble-horizontal" href="/logout">
-                    <span class="fas fa-sign-out-alt hvr-icon"></span> Log out
+                    <span class="fas fa-sign-out-alt hvr-icon"></span> Déconnexion
                 </a>
             </li>
         </ul>

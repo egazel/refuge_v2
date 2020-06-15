@@ -41,13 +41,24 @@ class MemberController extends AbstractController
         ]);
     }
 
-     /**
+    /**
       * @IsGranted("ROLE_MEMBER")
      * @Route("/member/makeDonation", name="makeDonation")
      */
     public function makeDonation()
     {
         return $this->render('member/doDonation.html.twig', [
+            'controller_name' => 'MemberController',
+        ]);
+    }
+
+    /**
+      * @IsGranted("ROLE_MEMBER")
+     * @Route("/member/becomeFoster", name="becomeFoster")
+     */
+    public function becomeFoster()
+    {
+        return $this->render('member/becomeFoster.html.twig', [
             'controller_name' => 'MemberController',
         ]);
     }
