@@ -7,9 +7,13 @@
         <link rel="stylesheet" href="/css/general.css">
         <link rel="stylesheet" href="/css/hover.css">
         <link rel="stylesheet" href="/css/admin.css">
+        <link rel="stylesheet" href="/css/mdb.css">
+
         <script src="/js/jquery.min.js"></script>
         <script src="/js/popper.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/mdb.min.js"></script>
+
         <script src="https://kit.fontawesome.com/6576995845.js" crossorigin="anonymous"></script>
 
         {% include "partials/member_header.html.twig" %}
@@ -19,68 +23,33 @@
         <h1 class="text-center mt-5">Animaux à l'adoption</h1>
        <div class="container border shadow mt-5 bg-white">
             <div class="row">
-              
-            </div>
-            <div class="row mt-5">
-                <div class="col-sm">
-                    <table class="table table-striped">
-                    <thead>
-                        <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                        <th scope="col">Handle</th>
-                        <th scope="col">Handle</th>
-                        <th scope="col">Handle</th>
-                        <th scope="col">Handle</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>
-                            <button class="btn btn-success"  data-toggle="modal" data-target="#moreInformations"><i class="fas fa-info"></i></button>
-                            <button class="btn btn-danger"  data-toggle="modal" data-target="#submitAdoptionForm"><i class="fas fa-heart"></i></button>
-                        </td>
-
-                        </tr>
-                        <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>
-                            <button class="btn btn-success"  data-toggle="modal" data-target="#moreInformations"><i class="fas fa-info"></i></button>
-                            <button class="btn btn-danger"  data-toggle="modal" data-target="#submitAdoptionForm"><i class="fas fa-heart"></i></button>
-                        </td>
-                        </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>
-                            <button class="btn btn-success"  data-toggle="modal" data-target="#moreInformations"><i class="fas fa-info"></i></button>
-                            <button class="btn btn-danger"  data-toggle="modal" data-target="#submitAdoptionForm"><i class="fas fa-heart"></i></button>
-                        </td>
-                        </tr>
-                    </tbody>
-                    </table>
-                </div>
+                {% for animal in animals %}
+                    {% if animals %}
+                        <div class="col-sm-3 mt-2 mb-2">
+                            <div class="card"  style="size:100%;">
+                                <!-- Card image -->
+                                {% if animal.imageLinks|length > 0 %}
+                                    <img class="card-img-top shadow" src="{{asset(animal.imageLinks[0])}}" alt="Card image cap">
+                                {% else %}
+                                     <img class="card-img-top" src="http://via.placeholder.com/300x400" alt="Card image cap">
+                                {% endif %}
+                                <!-- Card content -->
+                                <div class="card-body">
+                                    <!-- Title -->
+                                    <h4 class="card-title"><a>{{animal.name}}</a></h4>
+                                    <!-- Text -->
+                                    <p class="card-text">{{animal.description}}</p>
+                                    <!-- Button -->
+                                    <div class=" text-center">
+                                    <button class="btn btn-primary" id="{{animal.id}}" data-toggle="modal" data-id="{{animal.id}}" data-target="#animalDescriptionModal"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+                    {% else %}
+                        <p>Coming soon</p>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </body>

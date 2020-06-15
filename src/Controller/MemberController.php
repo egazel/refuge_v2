@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\AnimalRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,10 +24,12 @@ class MemberController extends AbstractController
      * @IsGranted("ROLE_MEMBER")
      * @Route("/member/animalsToAdopt", name="animalsToAdopt")
      */
-    public function animalsToAdopt()
+    public function animalsToAdopt(AnimalRepository $animalRepository)
     {
+        $animals = $animalRepository->findAll();
         return $this->render('member/animalsToAdopt.html.twig', [
             'controller_name' => 'MemberController',
+            'animals' => $animals
         ]);
     }
 
