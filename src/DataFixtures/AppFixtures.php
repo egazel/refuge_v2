@@ -77,7 +77,7 @@ class AppFixtures extends Fixture
             $animal->setRace($race);
             $animal->setIsHosted(false);
             $animal->setGerant($admin);
-
+            $manager->persist($animal);
         }
 
         $manager->persist($superAdmin);
@@ -86,7 +86,6 @@ class AppFixtures extends Fixture
         $manager->persist($user2);
 
         $manager->persist($race);
-        $manager->persist($animal);
 
         $manager->flush();
     }
