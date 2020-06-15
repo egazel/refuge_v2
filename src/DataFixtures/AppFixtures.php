@@ -6,6 +6,8 @@ namespace App\DataFixtures;
 use App\Entity\Race;
 use App\Entity\User;
 use App\Entity\Animal;
+use App\Entity\Gerant;
+use App\Entity\Membre;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -37,6 +39,9 @@ class AppFixtures extends Fixture
         $admin->setRegisterDate(new \DateTime('now'));
         $manager->persist($admin);
 
+        $gerant = new Gerant();
+        $gerant->setUser($admin);
+        $manager->persist($gerant);
 
         $user = new User();
         $user->setEmail("member1@member.fr");
@@ -46,6 +51,9 @@ class AppFixtures extends Fixture
         $user->setRegisterDate(new \DateTime('now'));
         $manager->persist($user);
 
+        $member = new Membre();
+        $member->setUser($user);
+        $manager->persist($member);
 
         $user2 = new User();
         $user2->setEmail("member2@member.fr");
@@ -54,6 +62,10 @@ class AppFixtures extends Fixture
         $user2->setUsualBrowser("Google Chrome");
         $user2->setRegisterDate(new \DateTime('now'));
         $manager->persist($user2);
+
+        $member2 = new Membre();
+        $member2->setUser($user2);
+        $manager->persist($member2);
 
         $race = new Race();
         $race->setName("Européen");
@@ -81,7 +93,7 @@ class AppFixtures extends Fixture
             $animal->setDateAdd(new \DateTime('now'));
             $animal->setRace($race);
             $animal->setIsHosted(false);
-            $animal->setGerant($admin);
+            $animal->setGerant($gerant);
             $manager->persist($animal);
         }
 
