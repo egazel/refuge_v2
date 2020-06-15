@@ -5,7 +5,9 @@ namespace App\Form;
 use App\Entity\Animal;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -39,7 +41,10 @@ class AnimalType extends AbstractType
                  ]
             )
             ->add('description', TextareaType::class, [
-                'attr' => ['class' => 'tinymce'],
+                'attr' => [
+                    'class' => 'tinymce',
+                    'placeholder' => 'Description de l\'animal'
+                ],
             ])
 
             ->add('okDogs', CheckboxType::class, [
@@ -79,7 +84,19 @@ class AnimalType extends AbstractType
                     ]
                 ]
             )
+            
             ->add('race')
+
+            ->add('imageLinks', FileType::class, [
+                'label' => 'Photo',
+                'required' => false,
+                'mapped' => false,
+                'constraints' => [ 
+                    new File([
+                        'maxSize' => '1024k',
+                    ])
+                ],
+            ])
         ;
     }
 

@@ -44,8 +44,9 @@
                         </thead>
                         <tbody>
                         {% for animal in animals %}
-                            <tr>
-                            <th scope="row">{{animal.id}}</th>
+                            <tr  scope="row">
+                            <div> <img src={{asset(animal.imageLinks[0])}}></div>
+                            <th>{{animal.id}}</th>
                             <td>{{animal.type}}</td>
                             <td>{{animal.name}}</td>
                             <td>{{animal.race}}</td>
@@ -54,14 +55,15 @@
                             <td>{{animal.adoptionPrice}} €</td>
                             <td>{{animal.dateAdd.format('d/m/Y')}}</td>
                             <td style="flex-direction:row;">
-                                <button class="btn btn-success" id="{{animal.id}}" data-toggle="modal" data-target="#animalDescriptionModal"><i class="fas fa-ellipsis-h"></i></button>
-                                <button class="btn btn-warning" id="{{animal.id}}" data-toggle="modal" data-target="#editAnimalModalForm"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-danger" id="{{animal.id}}" data-toggle="modal" data-target="#deleteAnimalModalForm"><i class="fas fa-trash"></i></button>
+                                <button class="btn btn-success" id="{{animal.id}}" data-toggle="modal" data-id="{{animal.id}}" data-target="#animalDescriptionModal"><i class="fas fa-ellipsis-h"></i></button>
+                                <button class="btn btn-warning" id="{{animal.id}}" data-toggle="modal" data-id="{{animal.id}}" data-target="#editAnimalModalForm"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-danger" id="{{animal.id}}" data-toggle="modal" data-id="{{animal.id}}" data-target="#deleteAnimalModalForm"><i class="fas fa-trash"></i></button>
                             </td>
                             </tr>
                         {% else %}
                             <tr>
                                 <th scope="row">Aucun animal pour le moment !</th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -146,6 +148,12 @@
                         <div class="form-group">
                             {{ form_errors(addAnimalForm.description) }}
                             {{ form_widget(addAnimalForm.description) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>Télécharger une photo</label>
+                            {{ form_errors(addAnimalForm.imageLinks) }}
+                            {{ form_widget(addAnimalForm.imageLinks) }}
                         </div>
                         <div class="mt-3 text-center">
                             <button type="submit" class="btn btn-primary m-*-auto">Enregistrer l'animal</button>
@@ -237,7 +245,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Voulez-vous vraiment supprimer {nomAnimal} ?</p>
+                    <p id="deleteText">Voulez-vous vraiment supprimer {nomAnimal} ?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">Supprimer</button>

@@ -16,9 +16,12 @@ use App\Repository\GerantRepository;
 use App\Repository\MembreRepository;
 use App\Repository\DonationRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Services\ContainerParametersHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -74,7 +77,7 @@ class AdminController extends AbstractController
     * @IsGranted("ROLE_ADMIN")
     * @Route("/admin/animalList", name="animalList")
     */
-    public function animalList(GerantRepository $gerantRepository, AnimalRepository $animalRepository, Request $request, EntityManagerInterface $entityManager)
+    public function animalList(ContainerParametersHelper $pathHelpers, GerantRepository $gerantRepository, AnimalRepository $animalRepository, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger)
     {
         $animal = new Animal();
         $gerant = $gerantRepository->findOneByUser($this->getUser());
@@ -87,6 +90,26 @@ class AdminController extends AbstractController
                 $animal->setGerant($gerant);
                 $animal->setIsHosted(false);
                 $animal->setDateAdd(new \DateTime('now'));
+                /** @var UploadedFile $picture */
+                $picture = $addAnimalForm->get('imageLinks')->getData();
+                if ($picture){
+                    $originalFileName = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
+                    $fileExtension = pathinfo($picture->getClientOriginalName(), PATHINFO_EXTENSION);
+
+                    $relativeSaveDir = '/img/Animals/'.$slugger->slug($animal->getName())."/";
+                    $saveDir = $pathHelpers->getApplicationRootDir(). "/public" . $relativeSaveDir;
+
+                    $safeFileName = $slugger->slug($originalFileName) . "." .  $fileExtension;
+                    
+                    $picture->move(
+                        $saveDir,
+                        $safeFileName
+                    );
+
+                    $animal->setImageLinks([$relativeSaveDir . "/" . $safeFileName]);
+                }
+
+                
                 $entityManager->persist($animal);
                 $entityManager->flush();
                 $this->addFlash(

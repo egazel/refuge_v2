@@ -116,6 +116,11 @@ class Animal
      */
     private $race;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $imageLinks = [];
+
 
     public function getId(): ?int
     {
@@ -319,5 +324,17 @@ class Animal
         return $this->name;
         // to show the id of the Category in the select
         // return $this->id;
+    }
+
+    public function getImageLinks(): ?array
+    {
+        return $this->imageLinks;
+    }
+
+    public function setImageLinks(?array $imageLinks): self
+    {
+        $this->imageLinks = $imageLinks;
+
+        return $this;
     }
 }
