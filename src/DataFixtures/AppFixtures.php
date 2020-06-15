@@ -3,7 +3,9 @@
 namespace App\DataFixtures;
 
 
+use App\Entity\Race;
 use App\Entity\User;
+use App\Entity\Animal;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -19,7 +21,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $superAdmin = new User();
-        $superAdmin->setEmail("admin@admin.fr");
+        $superAdmin->setEmail("buck@buck.fr");
         $superAdmin->setRoles(["ROLE_SUPER_ADMIN"]);
         $superAdmin->setPassword($this->passwordEncoder->encodePassword($superAdmin, "password"));
         $superAdmin->setUsualBrowser("Google Chrome");
@@ -49,10 +51,39 @@ class AppFixtures extends Fixture
         $user2->setUsualBrowser("Google Chrome");
         $user2->setRegisterDate(new \DateTime('now'));
         
+        $race = new Race();
+        $race->setName("Européen");
+
+        for ($i=0; $i<20; $i++){
+            $animal = new Animal();
+            $animal->setType("Chat");
+            $animal->setName("Animal no.\$i");
+            $animal->setAge(3);
+            if ($i%2==0){
+                $animal->setSex("Male");
+                $animal->setOkDogs(true);
+                $animal->setOkKids(true);
+
+            } else {
+                $animal->setSex("Femelle");
+                $animal->setOkDogs(false);
+                $animal->setOkKids(false);
+            }
+            $animal->setDescription("Description de l'animal \$i");
+            $animal->setOkCats(true);
+            $animal->setNeedCare(false);
+            $animal->setAdoptionPrice(random_int(0,100));
+            $animal->setDateAdd(new \DateTime('now'));
+            $animal->setRace($race);
+        }
+
         $manager->persist($superAdmin);
         $manager->persist($admin);
         $manager->persist($user);
         $manager->persist($user2);
+
+        $manager->persist($race);
+        $manager->persist($animal);
 
         $manager->flush();
     }
