@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Repository\AnimalRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -31,6 +33,17 @@ class MemberController extends AbstractController
             'controller_name' => 'MemberController',
             'animals' => $animals
         ]);
+    }
+
+    /**
+     * @IsGranted("ROLE_MEMBER")
+     * @Route("/moreInformations", name="moreInformations", options={"expose"=true})
+     */
+    public function moreInformations(AnimalRepository $animalRepository, Request $request, SerializerInterface $serializerInterface)
+    {
+        $animalDetail = $animalRepository->findOneById($request->query->get('id'));
+        $animalJson = $serializerInterface->serialize($animalDetail, 'json');
+        return $this->json($animalJson);
     }
 
     /**

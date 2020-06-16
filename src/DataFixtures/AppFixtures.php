@@ -94,6 +94,7 @@ class AppFixtures extends Fixture
             $animal->setRace($race);
             $animal->setIsHosted(false);
             $animal->setGerant($gerant);
+            $animal->setImageLinks(["via.placeholder.com/300x400"]);
             $manager->persist($animal);
         }
 

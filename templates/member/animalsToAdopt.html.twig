@@ -4,15 +4,14 @@
         <title>Liste des animaux à l'adoption</title>
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <link rel="stylesheet" href="/css/bootstrap.css">
-        <link rel="stylesheet" href="/css/general.css">
         <link rel="stylesheet" href="/css/hover.css">
-        <link rel="stylesheet" href="/css/admin.css">
         <link rel="stylesheet" href="/css/mdb.css">
 
-        <script src="/js/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
         <script src="/js/popper.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/mdb.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
         <script src="https://kit.fontawesome.com/6576995845.js" crossorigin="anonymous"></script>
 
@@ -23,6 +22,7 @@
         <h1 class="text-center mt-5">Animaux à l'adoption</h1>
        <div class="container border shadow mt-5 bg-white">
             <div class="row">
+            {# TODO fix the background + add modals for each card #}
                 {% for animal in animals %}
                     {% if animals %}
                         <div class="col-sm-3 mt-2 mb-2">
@@ -36,12 +36,14 @@
                                 <!-- Card content -->
                                 <div class="card-body">
                                     <!-- Title -->
-                                    <h4 class="card-title"><a>{{animal.name}}</a></h4>
+                                    <h4 class="card-title text-center"><a>{{animal.name}}</a></h4>
                                     <!-- Text -->
-                                    <p class="card-text">{{animal.description}}</p>
+                                    <p class="card-text"></p>
                                     <!-- Button -->
                                     <div class=" text-center">
-                                    <button class="btn btn-primary" id="{{animal.id}}" data-toggle="modal" data-id="{{animal.id}}" data-target="#animalDescriptionModal"><i class="fas fa-plus"></i></button>
+                                    <button class="btn btn-primary modalOpen" onClick="onClickModalOpen({{animal.id}})" data-toggle="modal" data-target="#moreInformations">
+                                        <i class="fas fa-ellipsis-h"></i>
+                                    </button>
                                     </div>
                                 </div>
                             </div>
@@ -56,17 +58,8 @@
 
     <div class="modal fade" id="moreInformations" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Plus d'informations à propos de {animal.name} </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-           
+            <div class="modal-content" id="contentInformations">
+                
             </div>
         </div>
     </div>
@@ -82,7 +75,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                ...
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -92,3 +84,27 @@
         </div>
     </div>
 </html>
+
+<script>
+    function onClickModalOpen(animalId){
+        const url="{{ path('moreInformations') }}"; 
+        // animalId = $('.modalOpen').data('id'); //get the id with this
+        axios.get(url+"?id="+animalId).then(function(response) {
+            var d = jQuery.parseJSON(response.data);
+            console.log(d);
+            $('#contentInformations').html('');
+            var modalContent = 
+                    '<div class="modal-header">'+
+                    '<h5 class="modal-title" id="exampleModalLongTitle">Plus d\'informations à propos de '+d.name+' </h5>'+
+                    '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
+                    '<span aria-hidden="true">&times;</span>'+
+                    '</button>'+
+                '</div>'+
+                '<div class="modal-body">'+
+                    d.description+
+                '</div>'
+            ;
+            $('#contentInformations').append(modalContent);
+        })
+    } 
+</script>
