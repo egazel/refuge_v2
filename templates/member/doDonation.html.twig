@@ -20,28 +20,23 @@
         <h1 class="text-center mt-5">Effectuer une donation</h1>
         
        <div class="container">
-            <form method="POST">
-                <div class="row mt-5">
-                    <div class="col-sm-3"></div>
+            {{ form_start(makeDonationForm) }}
+                <div class="col-sm-3"></div>
 
-                    <div class="col-sm border shadow">
-                        <label for="inputEmail">Montant :</label>
-                        <input style="display:flex;" type="number" name="amount" id="inputAmount" class="form-control" required autofocus>
-                        <br>
-                        <input type="checkbox" aria-label="Checkbox for following text input">
-                        <label>Faire un don anonyme</label>
-                        <div class="d-flex justify-content-center col-lg-12 mt-1">
-                            <button class="btn btn-success shadow center-block mb-2" type="submit">
-                                Donner !
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-sm-3"></div>
-
+                <div class="col-sm border bg-white shadow">
+                    <label for="inputEmail">Montant :</label>
+                        {{ form_errors(makeDonationForm.amount) }}
+                        {{ form_widget(makeDonationForm.amount) }}
+                    <br>
+                    <div class="d-flex justify-content-center col-lg-12 mt-1">
+                        <button class="btn btn-success shadow center-block mb-2" type="submit">
+                            Donner !
+                        </button>
                     </div>
                 </div>
-
-            </form>
+                    <div class="col-sm-3"></div>
+                </div>
+            {{ form_end(makeDonationForm) }}
         </div>
     </body>
 

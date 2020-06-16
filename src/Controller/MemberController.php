@@ -2,7 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Donation;
+use App\Form\MakeDonationType;
+use App\Repository\UserRepository;
 use App\Repository\AnimalRepository;
+use App\Repository\MembreRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -61,11 +66,34 @@ class MemberController extends AbstractController
       * @IsGranted("ROLE_MEMBER")
      * @Route("/member/makeDonation", name="makeDonation")
      */
-    public function makeDonation()
+    public function makeDonation(MembreRepository $membreRepository, Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository)
     {
+        $donation = new Donation();
+        $makeDonationForm = $this->createForm(MakeDonationType::class, $donation);
+        $makeDonationForm->handleRequest($request);
+        $isModalValid = true;
+        $membreId = $membreRepository->findOneByUser($this->getUser());
+        if ($makeDonationForm->isSubmitted()) {
+            if ($makeDonationForm->isValid()){
+                $donation->setMemberDonatingId($membreId);
+                $donation->setDate(new \DateTime('now'));
+                $entityManager->persist($donation);
+                $entityManager->flush();
+                $this->addFlash(
+                    'success',
+                    'Merci pour votre donation !'
+                );
+                $donation = new Donation();
+                $makeDonationForm = $this->createForm(MakeDonationType::class, $donation);
+                
+                $this->redirectToRoute('makeDonation', ['makeDonationForm' => $makeDonationForm->createView()]);
+            } else {
+                $isModalValid = false;
+            }
+        }
+
         return $this->render('member/doDonation.html.twig', [
-            'controller_name' => 'MemberController',
-        ]);
+            'controller_name' => 'MemberController', 'makeDonationForm' => $makeDonationForm->createView(), 'isModalValid' => $isModalValid]);
     }
 
     /**

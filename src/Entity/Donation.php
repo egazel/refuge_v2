@@ -75,4 +75,17 @@ class Donation
 
         return $this;
     }
+
+    public function setMemberDonatingId(?int $memberDonatingId): self
+    {
+        $this->member_donating_id = $memberDonatingId;
+
+        return $this;
+    }
+
+    public function getMemberDonatingId(): ?int
+    {
+
+        return $this->member_donating_id;
+    }
 }
