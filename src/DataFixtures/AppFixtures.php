@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 
+use App\Entity\FA;
 use App\Entity\Race;
 use App\Entity\User;
 use App\Entity\Animal;
