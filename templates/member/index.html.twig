@@ -28,13 +28,13 @@
                                 Prochains événements<br>  
                         </div>
                         <ul class="list-group list-group-flush"  style="overflow:auto;">
-                            {% for event in events %}
                                 {% if events|length > 0 %}
-                                    <li class="list-group-item">{{event.date.format('d/m/Y')}} - {{event.location}}</li>
+                                    {% for event in events %}
+                                        <li class="list-group-item">{{event.date.format('d/m/Y')}} - {{event.location}}</li>
+                                    {% endfor %}
                                 {% else %}
                                     <li class="list-group-item">Aucun évenement de prévu.</li>
                                 {% endif %}
-                            {% endfor %}
                         </ul>
                             <div class="text-center">
                                 <a class="btn btn-warning m-*-auto" href="{{ path('eventsToCome') }}"><i class="fas fa-plus"></i> Voir plus</a> 
