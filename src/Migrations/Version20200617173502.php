@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200617172747 extends AbstractMigration
+final class Version20200617173502 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,7 @@ final class Version20200617172747 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE animal (id INT AUTO_INCREMENT NOT NULL, fa_id INT DEFAULT NULL, member_id INT DEFAULT NULL, gerant_id INT DEFAULT NULL, race_id INT DEFAULT NULL, type VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, age INT NOT NULL, sex VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, ok_dogs TINYINT(1) DEFAULT NULL, ok_cats TINYINT(1) DEFAULT NULL, ok_kids TINYINT(1) DEFAULT NULL, adoption_price DOUBLE PRECISION NOT NULL, date_add DATE NOT NULL, need_care TINYINT(1) NOT NULL, is_hosted TINYINT(1) NOT NULL, image_links JSON DEFAULT NULL, INDEX IDX_6AAB231FCACAF9B4 (fa_id), INDEX IDX_6AAB231F7597D3FE (member_id), INDEX IDX_6AAB231FA500A924 (gerant_id), INDEX IDX_6AAB231F6E59D40D (race_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE animal (id INT AUTO_INCREMENT NOT NULL, fa_id INT DEFAULT NULL, member_id INT DEFAULT NULL, gerant_id INT DEFAULT NULL, race_id INT DEFAULT NULL, type VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, age INT NOT NULL, sex VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, ok_dogs TINYINT(1) DEFAULT NULL, ok_cats TINYINT(1) DEFAULT NULL, ok_kids TINYINT(1) DEFAULT NULL, adoption_price DOUBLE PRECISION NOT NULL, date_add DATE NOT NULL, need_care TINYINT(1) NOT NULL, is_hosted TINYINT(1) NOT NULL, image_links JSON NOT NULL, INDEX IDX_6AAB231FCACAF9B4 (fa_id), INDEX IDX_6AAB231F7597D3FE (member_id), INDEX IDX_6AAB231FA500A924 (gerant_id), INDEX IDX_6AAB231F6E59D40D (race_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE donation (id INT AUTO_INCREMENT NOT NULL, member_donating_id INT NOT NULL, amount DOUBLE PRECISION NOT NULL, date DATE NOT NULL, INDEX IDX_31E581A0D4945564 (member_donating_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE event (id INT AUTO_INCREMENT NOT NULL, gerant_id INT DEFAULT NULL, date DATETIME NOT NULL, location VARCHAR(255) NOT NULL, INDEX IDX_3BAE0AA7A500A924 (gerant_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE fa (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, house_type VARCHAR(255) DEFAULT NULL, has_dog TINYINT(1) DEFAULT NULL, has_cat TINYINT(1) DEFAULT NULL, has_kid TINYINT(1) DEFAULT NULL, can_quarantine TINYINT(1) DEFAULT NULL, house_size INT DEFAULT NULL, UNIQUE INDEX UNIQ_48CB8F10A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');

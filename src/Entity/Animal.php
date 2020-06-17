@@ -117,7 +117,7 @@ class Animal
     private $race;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="json")
      */
     private $imageLinks = [];
 
@@ -331,7 +331,7 @@ class Animal
         return $this->imageLinks;
     }
 
-    public function setImageLinks(?array $imageLinks): self
+    public function setImageLinks(array $imageLinks): self
     {
         $this->imageLinks = $imageLinks;
 
