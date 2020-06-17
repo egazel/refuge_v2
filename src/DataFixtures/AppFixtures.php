@@ -44,7 +44,7 @@ class AppFixtures extends Fixture
         $manager->persist($gerant);
 
         $user = new User();
-        $user->setEmail("member1@member.fr");
+        $user->setEmail("membre@membre.fr");
         $user->setRoles(["ROLE_MEMBER"]);
         $user->setPassword($this->passwordEncoder->encodePassword($user, "password"));
         $user->setUsualBrowser("Google Chrome");
@@ -56,7 +56,7 @@ class AppFixtures extends Fixture
         $manager->persist($member);
 
         $user2 = new User();
-        $user2->setEmail("member2@member.fr");
+        $user2->setEmail("membre2@membre.fr");
         $user2->setRoles(["ROLE_MEMBER"]);
         $user2->setPassword($this->passwordEncoder->encodePassword($user2, "password"));
         $user2->setUsualBrowser("Google Chrome");
@@ -66,6 +66,19 @@ class AppFixtures extends Fixture
         $member2 = new Membre();
         $member2->setUser($user2);
         $manager->persist($member2);
+
+        $user3 = new User();
+        $user3->setEmail("fa@fa.fr");
+        $user3->setRoles(["ROLE_FA"]);
+        $user3->setPassword($this->passwordEncoder->encodePassword($user3, "password"));
+        $user3->setUsualBrowser("Google Chrome");
+        $user3->setRegisterDate(new \DateTime('now'));
+        $manager->persist($user3);
+
+        $fa = new FA();
+        $fa->setUser($user3);
+        $manager->persist($fa);
+
 
         $race = new Race();
         $race->setName("Européen");
@@ -94,7 +107,7 @@ class AppFixtures extends Fixture
             $animal->setRace($race);
             $animal->setIsHosted(false);
             $animal->setGerant($gerant);
-            $animal->setImageLinks(["via.placeholder.com/300x400"]);
+            $animal->setImageLinks(["\public\img\Animals\Pristie\12301498-1111115588913264-4335808417594391057-n.jpg"]);
             $manager->persist($animal);
         }
 
