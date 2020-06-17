@@ -35,7 +35,25 @@ class AnimalRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getThreeOldestAnimals()
+    {
+        return $this->createQueryBuilder('d')
+            ->orderBy('d.dateAdd','ASC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
+    public function getThreeNewestAnimals()
+    {
+        return $this->createQueryBuilder('d')
+            ->orderBy('d.dateAdd','DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     /*
     public function findOneBySomeField($value): ?Animal
     {

@@ -44,36 +44,37 @@
                         </thead>
                         <tbody>
                         {% for animal in animals %}
-                            {% set i=1 %}
-                            <tr  scope="row">
-                            {# <div> <img src={{asset(animal.imageLinks[0])}}></div> #}
-                            <th>{{loop.index0 + 1}}</th>
-                            <td>{{animal.type}}</td>
-                            <td>{{animal.name}}</td>
-                            <td>{{animal.race}}</td>
-                            <td>{{animal.age}}</td>
-                            <td>{{animal.sex}}</td>
-                            <td>{{animal.adoptionPrice}} €</td>
-                            <td>{{animal.dateAdd.format('d/m/Y')}}</td>
-                            <td style="flex-direction:row;">
-                                <button class="btn btn-success" id="{{animal.id}}" data-toggle="modal" data-id="{{animal.id}}" data-target="#animalDescriptionModal"><i class="fas fa-ellipsis-h"></i></button>
-                                <button class="btn btn-warning" id="{{animal.id}}" data-toggle="modal" data-id="{{animal.id}}" data-target="#editAnimalModalForm"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-danger" id="{{animal.id}}" data-toggle="modal" data-id="{{animal.id}}" data-target="#deleteAnimalModalForm"><i class="fas fa-trash"></i></button>
-                            </td>
-                            </tr>
-                           
-                        {% else %}
-                            <tr>
-                                <th scope="row">Aucun animal pour le moment !</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
+                            {% if animals|length > 0 %}
+                                <tr  scope="row">
+                                {# <div> <img src={{asset(animal.imageLinks[0])}}></div> #}
+                                <th>{{loop.index0 + 1}}</th>
+                                <td>{{animal.type}}</td>
+                                <td>{{animal.name}}</td>
+                                <td>{{animal.race}}</td>
+                                <td>{{animal.age}}</td>
+                                <td>{{animal.sex}}</td>
+                                <td>{{animal.adoptionPrice}} €</td>
+                                <td>{{animal.dateAdd.format('d/m/Y')}}</td>
+                                <td style="flex-direction:row;">
+                                    <button class="btn btn-success" id="{{animal.id}}" data-toggle="modal" data-id="{{animal.id}}" data-target="#animalDescriptionModal"><i class="fas fa-ellipsis-h"></i></button>
+                                    <button class="btn btn-warning" id="{{animal.id}}" data-toggle="modal" data-id="{{animal.id}}" data-target="#editAnimalModalForm"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-danger" id="{{animal.id}}" data-toggle="modal" data-id="{{animal.id}}" data-target="#deleteAnimalModalForm"><i class="fas fa-trash"></i></button>
+                                </td>
+                                </tr>
+                            
+                            {% else %}
+                                <tr>
+                                    <th scope="row">Aucun animal pour le moment !</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            {% endif %}
                         {% endfor %}
                         </tbody>
                     </table>

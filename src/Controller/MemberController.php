@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Donation;
 use App\Form\MakeDonationType;
 use App\Repository\UserRepository;
+use App\Repository\EventRepository;
 use App\Repository\AnimalRepository;
 use App\Repository\MembreRepository;
+use App\Repository\DonationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,10 +22,25 @@ class MemberController extends AbstractController
      * @IsGranted("ROLE_MEMBER")
      * @Route("/member", name="member")
      */
-    public function index()
+    public function index(AnimalRepository $animalRepository, EventRepository $eventRepository, DonationRepository $donationRepository, UserRepository $userRepository)
     {
+        $oldestAnimals = $animalRepository->getThreeOldestAnimals();
+        $newestAnimals = $animalRepository->getThreeNewestAnimals();
+        $events = $eventRepository->findAll();
+        $donations = $donationRepository->findAll();
+        $donorsMail = [];
+        for ($i=0; $i < count($donations); $i++){
+           $tmp = $userRepository->findByMemberId($donations[$i]->getMemberDonatingId());
+           array_push($donorsMail, $tmp[0]->getEmail());
+        }
+
         return $this->render('member/index.html.twig', [
             'controller_name' => 'MemberController',
+            'oldestAnimals' => $oldestAnimals,
+            'newestAnimals' => $newestAnimals,
+            'events' => $events,
+            'donations' => $donations,
+            'donorsMail' => $donorsMail
         ]);
     }
 
@@ -55,10 +72,13 @@ class MemberController extends AbstractController
      * @IsGranted("ROLE_MEMBER")
      * @Route("/member/eventsToCome", name="eventsToCome")
      */
-    public function eventsToCome()
+    public function eventsToCome(EventRepository $eventRepository)
     {
+        $events = $eventRepository->findAll();
+
         return $this->render('member/eventsToCome.html.twig', [
             'controller_name' => 'MemberController',
+            'events' => $events
         ]);
     }
 
@@ -71,7 +91,6 @@ class MemberController extends AbstractController
         $donation = new Donation();
         $makeDonationForm = $this->createForm(MakeDonationType::class, $donation);
         $makeDonationForm->handleRequest($request);
-        $isModalValid = true;
         $membreId = $membreRepository->findOneByUser($this->getUser());
         if ($makeDonationForm->isSubmitted()) {
             if ($makeDonationForm->isValid()){
@@ -87,13 +106,11 @@ class MemberController extends AbstractController
                 $makeDonationForm = $this->createForm(MakeDonationType::class, $donation);
                 
                 $this->redirectToRoute('makeDonation', ['makeDonationForm' => $makeDonationForm->createView()]);
-            } else {
-                $isModalValid = false;
             }
         }
 
         return $this->render('member/doDonation.html.twig', [
-            'controller_name' => 'MemberController', 'makeDonationForm' => $makeDonationForm->createView(), 'isModalValid' => $isModalValid]);
+            'controller_name' => 'MemberController', 'makeDonationForm' => $makeDonationForm->createView()]);
     }
 
     /**

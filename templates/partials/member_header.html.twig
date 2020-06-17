@@ -1,5 +1,7 @@
 <link rel="icon" href="/img/favicon-32x32.png" />
 <link rel="stylesheet" href="/css/dashboards.css"/>
+<link rel="stylesheet" href="css/addons/datatables.min.css">
+<script src="/js/addons/datatables.min.js"></script>
 
 <nav class="navbar navbar-expand-lg shadow">
     <a class="navbar-brand hvr-icon-spin hvr-grow" href="{{ path('member') }}">
@@ -29,18 +31,13 @@
                     Faire une donation
                 </a>
             </li>
-             <li class="nav-item">
-                <a class="nav-link hvr-icon-pulse-grow" href="{{path('becomeFoster')}}">
-                    <i class="fas text-primary fa-home hvr-icon"></i>
-                    Devenir famille d'accueil
-                </a>
-            </li>
+            
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="nav-item">
-                <a class="nav-link hvr-icon-pulse-grow" href="#">
-                    <i class="far fa-user-circle text-warning hvr-icon"></i>
-                    Mon profil
+                <a class="nav-link hvr-icon-pulse-grow" href="{{path('becomeFoster')}}">
+                    <i class="fas text-primary fa-home hvr-icon"></i>
+                    Devenir famille d'accueil
                 </a>
             </li>
             <li><a class="nav-link hvr-icon-wobble-horizontal" href="/logout">

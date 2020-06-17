@@ -22,9 +22,8 @@
         <h1 class="text-center mt-5">Animaux à l'adoption</h1>
        <div class="container border shadow mt-5 bg-white">
             <div class="row">
-            {# TODO fix the background + add modals for each card #}
                 {% for animal in animals %}
-                    {% if animals %}
+                    {% if animals|length > 1 %}
                         <div class="col-sm-3 mt-2 mb-2">
                             <div class="card"  style="size:100%;">
                                 <!-- Card image -->
@@ -41,7 +40,7 @@
                                     <p class="card-text"></p>
                                     <!-- Button -->
                                     <div class=" text-center">
-                                    <button class="btn btn-primary modalOpen" onClick="onClickModalOpen({{animal.id}})" data-toggle="modal" data-target="#moreInformations">
+                                    <button class="btn btn-primary shadow modalOpen" onClick="onClickModalOpen({{animal.id}})" data-toggle="modal" data-target="#moreInformations">
                                         <i class="fas fa-ellipsis-h"></i>
                                     </button>
                                     </div>
@@ -49,7 +48,7 @@
                             </div>
                         </div>   
                     {% else %}
-                        <p>Coming soon</p>
+                        <p>Aucun animal à l'adoption pour le moment. Revenez plus tard !</p>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -91,7 +90,6 @@
         // animalId = $('.modalOpen').data('id'); //get the id with this
         axios.get(url+"?id="+animalId).then(function(response) {
             var d = jQuery.parseJSON(response.data);
-            console.log(d);
             $('#contentInformations').html('');
             var modalContent = 
                     '<div class="modal-header">'+
@@ -102,8 +100,7 @@
                 '</div>'+
                 '<div class="modal-body">'+
                     d.description+
-                '</div>'
-            ;
+                '</div>';
             $('#contentInformations').append(modalContent);
         })
     } 

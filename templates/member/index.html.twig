@@ -1,13 +1,10 @@
-{% if is_granted('ROLE_MEMBER') %}
 <html>
     <head>
         <meta charset="UTF-8">
         <title>Interface Membre</title>
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <link rel="stylesheet" href="/css/bootstrap.css">
-        <link rel="stylesheet" href="/css/general.css">
         <link rel="stylesheet" href="/css/hover.css">
-        <link rel="stylesheet" href="/css/admin.css">
         <link rel="stylesheet" href="/css/mdb.css">
 
         <script src="/js/jquery.min.js"></script>
@@ -23,18 +20,86 @@
     <body>
         <h1 class="text-center mt-5">Tableau de bord</h1>
         <div class="container border shadow bg-white">
-            <div class="row mt-5">
-                <div class="col-sm">
-                    <img src="http://via.placeholder.com/350"></img>
+            <div class="row mt-3">
+                <div class="col-sm-4">
+                    <div class="card mt-5" style="height:19rem;">
+                        <div class="card-header">
+                            <i class="fas fa-calendar-alt"></i>
+                                Prochains événements<br>  
+                        </div>
+                        <ul class="list-group list-group-flush"  style="overflow:auto;">
+                            {% for event in events %}
+                                {% if events|length > 0 %}
+                                    <li class="list-group-item">{{event.date.format('d/m/Y')}} - {{event.location}}</li>
+                                {% else %}
+                                    <li class="list-group-item">Aucun évenement de prévu.</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                            <div class="text-center">
+                                <a class="btn btn-warning m-*-auto" href="{{ path('eventsToCome') }}"><i class="fas fa-plus"></i> Voir plus</a> 
+                            </div>
+                    </div>
+                    <div class="card mt-4" style="height:19rem;">
+                        <div class="card-header">
+                            <i class="fas fa-calendar-alt"></i>
+                                Ils ont été généreux !<br>  
+                        </div>
+                        <ul class="list-group list-group-flush"  style="overflow:auto;">
+                                {% if donations|length > 0 %}
+                                    {% for i in 0..donations|length-1 %}
+                                        <li class="list-group-item">{{donorsMail[i]}} - {{donations[i].amount}}€</li>
+                                    {% endfor %}
+
+                                {% else %}
+                                    <li class="list-group-item">Aucune donation enregistrée. Soyez le premier !</li>
+                                {% endif %}
+                        </ul>
+                            <div class="text-center">
+                                <a class="btn btn-warning m-*-auto" href="{{ path('makeDonation') }}"><i class="fas fa-plus"></i> Faire un don</a> 
+                            </div>
+                    </div>
                 </div>
-                <div class="col-sm">
-                    <img src="http://via.placeholder.com/350"></img>
+                <div class="col-sm-4">
+                    <h4 class="text-center"><i class="fas fa-paw"></i> Les nouveaux arrivants</h4>
+                    {% for new in newestAnimals %}
+                        {% if newestAnimals|length > 0 %}
+                            <div class="card mb-2">
+                                <div class="card-header text-center">
+                                        <b>{{new.name}}</b> - Réfugié(e) le {{new.dateAdd.format('d/m/Y')}}
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <img style="width:30%;" src="{{asset(new.imageLinks[0])}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+
+                        {% endif %}
+                    {% endfor %}
                 </div>
-                <div class="col-sm">
+                
+                <div class="col-sm-4">
+                    <h4 class="text-center"><i class="fas fa-flag"></i> Les anciens du refuge</h4>
+                    {% for old in oldestAnimals %}
+                        {% if oldestAnimals|length > 0 %}
+                            <div class="card mb-2">
+                                <div class="card-header text-center">
+                                        <b>{{old.name}}</b> - En attente depuis le {{old.dateAdd.format('d/m/Y')}}
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <img class="align-right" style="width:30%;" src="{{asset(old.imageLinks[0])}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </body>
-
 </html>
-{% endif %}
