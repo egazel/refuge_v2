@@ -108,7 +108,7 @@ class AppFixtures extends Fixture
             $animal->setRace($race);
             $animal->setIsHosted(false);
             $animal->setGerant($gerant);
-            $animal->setImageLinks(["\public\img\Animals\Pristie\12301498-1111115588913264-4335808417594391057-n.jpg"]);
+            $animal->setImageLinks(["\img\Animals\Pristie\12301498-1111115588913264-4335808417594391057-n.jpg"]);
             $manager->persist($animal);
         }
 
