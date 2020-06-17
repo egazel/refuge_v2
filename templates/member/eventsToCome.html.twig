@@ -32,8 +32,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for event in events %}
-                            {% if events|length > 0 %}
+                        {% if events|length > 0 %}
+                            {% for event in events %}
                                 <tr>
                                 <th scope="row">{{loop.index0 + 1}}</th>
                                 <td>{{event.date.format('d/m/Y - h:m')}}</td>
@@ -43,14 +43,15 @@
                                 </td>
 
                                 </tr>
-                            {% else %}
-                                <tr>
-                                <th scope="row">Aucun événement prévu.</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            {% endif %}
-                        {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                            <th scope="row">Aucun événement prévu.</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        {% endif %}
+                        
                     </tbody>
                     </table>
                 </div>
