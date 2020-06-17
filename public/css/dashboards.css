@@ -1,5 +1,6 @@
 .navColor {
-    background-color:#4dc1c1;
+    background-color:#111111;
+    opacity:0.5;
 }
 
 body {
@@ -9,8 +10,4 @@ body {
     background-repeat:no-repeat;
     background-attachment: fixed;
     background-size:cover;
-}
-
-.navbar a {
-    color:#222222;
 }

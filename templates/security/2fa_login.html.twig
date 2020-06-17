@@ -3,34 +3,36 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <div class="container" style="margin-top:15%; margin-left:25%;">
-        <h3 class="label text-center"><label for="_auth_code">Double authentification google</label></h2>
-        <div class="row">
-            <div class="col-sm"></div>
-            <div class="col-sm">
-                <img id="imageQRcode" src="{{ url }}" alt="QR Code" name="imageQRcode" />
-            </div>
-            <div class="col-sm"></div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-sm"></div>
+    <div class="container" style="margin-top:15%; margin-left:20%;">
+        <div class=" border shadow bg-white rounded slightlyOpaque">
+        <h3 class="label text-center "><label for="_auth_code">Double authentification google</label></h2>
+            <div class="row">
+                <div class="col-sm-5"></div>
                 <div class="col-sm">
-                    <form class="form" action="/2fa_check" method="post">
-                        <p class="widget">
-                            <input id="_auth_code" type="text" name="_auth_code" autocomplete="one-time-code" autofocus />
-                        </p>
-
-                        <p class="submit"><input type="submit" value="Login" /></p>
-                    </form>
+                    <img id="imageQRcode" src="{{ url }}" alt="QR Code" name="imageQRcode" />
                 </div>
-            <div class="col-sm"></div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-sm"></div>
-            <div class="col-sm">
-                <p class="cancel"><a href="/logout">Cancel</a></p>
+                <div class="col-sm"></div>
             </div>
-            <div class="col-sm"></div>
+            <div class="row mt-2">
+                <div class="col-sm-5"></div>
+                    <div class="col-sm">
+                        <form class="form" action="/2fa_check" method="post">
+                            <p class="widget">
+                                <input id="_auth_code" type="text" name="_auth_code" autocomplete="one-time-code" autofocus />
+                            </p>
+
+                            <p class="submit"><input type="submit" value="Login" /></p>
+                        </form>
+                    </div>
+                <div class="col-sm"></div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-sm-5"></div>
+                <div class="col-sm">
+                    <p class="cancel"><a href="/logout">Cancel</a></p>
+                </div>
+                <div class="col-sm"></div>
+            </div>
         </div>
     </div>
 {% endblock %}

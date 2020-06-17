@@ -1,9 +1,17 @@
 <link rel="icon" href="/img/favicon-32x32.png" />
 <link rel="stylesheet" href="/css/dashboards.css"/>
+<link rel="stylesheet" href="/css/general.css"/>
+<link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/hover.css">
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/6576995845.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="css/addons/datatables.min.css">
 <script src="/js/addons/datatables.min.js"></script>
 
-<nav class="navbar navbar-expand-lg shadow">
+<nav class="navbar navbar-expand-lg navbar-dark navColor shadow">
     <a class="navbar-brand hvr-icon-spin hvr-grow" href="{{ path('member') }}">
         <img src="/img/logo.png" alt="" class="hvr-icon rounded-circle shadow img-fluid mt-2 mb-2" style="width: 32px;">
     </a>
@@ -33,7 +41,7 @@
             </li>
             
         </ul>
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-dark navbar-right">
             <li class="nav-item">
                 <a class="nav-link hvr-icon-pulse-grow" href="{{path('becomeFoster')}}">
                     <i class="fas text-primary fa-home hvr-icon"></i>

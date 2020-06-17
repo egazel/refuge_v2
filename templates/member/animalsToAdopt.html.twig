@@ -19,13 +19,13 @@
 
     </head>
     <body>
-        <h1 class="text-center mt-5">Animaux à l'adoption</h1>
-       <div class="container border shadow mt-5 mb-2 bg-white">
+        <h1 class="text-center mt-5  text-white">Animaux à l'adoption</h1>
+       <div class="container border shadow mt-5 mb-2 bg-white slightlyOpaque">
             <div class="row">
                 {% if animals|length > 1 %}
                     {% for animal in animals %}
                         <div class="col-sm-3 mt-2 mb-2">
-                            <div class="card"  style="size:100%;">
+                            <div class="card"  style="size:100%; height:30rem;">
                                 <!-- Card image -->
                                 {% if animal.imageLinks|length > 0 %}
                                     <img class="card-img-top shadow" src="{{asset(animal.imageLinks[0])}}" alt="Card image cap">
