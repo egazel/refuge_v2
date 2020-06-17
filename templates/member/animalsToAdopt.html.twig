@@ -86,11 +86,11 @@
 
 <script>
     function onClickModalOpen(animalId){
+        $('#contentInformations').html('');
         const url="{{ path('moreInformations') }}"; 
         // animalId = $('.modalOpen').data('id'); //get the id with this
         axios.get(url+"?id="+animalId).then(function(response) {
             var d = jQuery.parseJSON(response.data);
-            $('#contentInformations').html('');
             var modalContent = 
                     '<div class="modal-header">'+
                     '<h5 class="modal-title" id="exampleModalLongTitle">Plus d\'informations à propos de '+d.name+' </h5>'+
