@@ -20,6 +20,7 @@ use App\Services\ContainerParametersHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -192,5 +193,38 @@ class AdminController extends AbstractController
         }
         return $this->render('admin/donationsList.html.twig', 
         ['donations' => $donations, 'donationsIds' => $donationMailsArray],);
+    }
+
+    /** 
+    * @IsGranted("ROLE_ADMIN")
+    * @Route("/openDeletionModal", name="openDeletionModal")
+    */
+    public function openDeletionModal(AnimalRepository $animalRepository, Request $request, SerializerInterface $serializerInterface)
+    {
+        $animalDetail = $animalRepository->findOneById($request->query->get('id'));
+        $animalJson = $serializerInterface->serialize($animalDetail, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }
+        ]);
+        return $this->json($animalJson, 200, ['Content-Type' => 'application/json']);
+    }
+
+
+       
+    /** 
+    * @IsGranted("ROLE_ADMIN")
+    * @Route("/deleteAnimal/{id}", name="deleteAnimal")
+    */
+    public function deleteAnimal($id, AnimalRepository $animalRepository, Request $request, EntityManagerInterface $entityManager)
+    {
+        $animal = $animalRepository->find($id);
+        $entityManager->remove($animal);
+        $entityManager->flush();
+        $this->addFlash(
+            'success',
+            'L\'animal a bien été supprimé !'
+        );
+        return $this->redirectToRoute('animalList');
     }
 }
