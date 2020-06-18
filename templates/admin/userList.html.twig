@@ -21,9 +21,6 @@
                             <th scope="col"><i class="fas fa-sort"></i> Rôle</th>
                             <th scope="col"></th>
                             <th scope="col"><i class="fas fa-sort"></i> Edition</th>
-                            {# <th scope="col">Handle</th>
-                            <th scope="col">Handle</th>
-                            <th scope="col">Handle</th> #}
                         </tr>
                     </thead>
                     <tbody>
@@ -35,7 +32,7 @@
                             <td></td>
                             <td style="flex-direction:row;">
                                 <button class="btn btn-warning"  data-toggle="modal" data-target="#editUserModalForm"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-danger"  data-toggle="modal" data-target="#deleteUserModalForm"><i class="fas fa-trash"></i></button>
+                                <button class="btn btn-danger" onClick="onClickDeleteModalConfirmationOpen({{user.id}})"  data-toggle="modal" data-target="#deleteUserModalForm"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
                     {% else %}
@@ -74,20 +71,8 @@
 
     <div class="modal fade" id="deleteUserModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Supprimer un utilisateur</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Voulez-vous vraiment supprimer {mailutilisateur} ?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Supprimer</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                </div>
+            <div class="modal-content" id="deleteUserContent">
+               
             </div>
         </div>
     </div>
@@ -101,4 +86,27 @@
         });
         $('.dataTables_length').addClass('bs-select');
     });
+
+    function onClickDeleteModalConfirmationOpen(userId){
+        $('#deleteUserContent').html('');
+        const url="{{ path('injectUserToModal') }}"; 
+        axios.get(url+"?id="+userId).then(function(response) {
+            var d = jQuery.parseJSON(response.data);
+            var modalContent = 
+                '<div class="modal-header">'+
+                    '<h5 class="modal-title" id="exampleModalLongTitle">Supprimer un utilisateur</h5>'+
+                    '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
+                    '<span aria-hidden="true">&times;</span>'+
+                    '</button>'+
+                '</div>'+
+                '<div class="modal-body">'+
+                    'Voulez-vous vraiment supprimer l\'utilisateur suivant : <br>'+d.email+
+                '</div>'+
+                '<div class="modal-footer">'+
+                    '<a type="button" class="btn btn-primary" href="/deleteUser/'+d.id+'">Supprimer</a>'+
+                    '<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>'+
+                '</div>'
+            $('#deleteUserContent').append(modalContent);
+        })
+    } 
 </script>

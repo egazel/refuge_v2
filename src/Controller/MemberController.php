@@ -22,25 +22,19 @@ class MemberController extends AbstractController
      * @IsGranted("ROLE_MEMBER")
      * @Route("/member", name="member")
      */
-    public function index(AnimalRepository $animalRepository, EventRepository $eventRepository, DonationRepository $donationRepository, UserRepository $userRepository)
+    public function index(AnimalRepository $animalRepository, EventRepository $eventRepository, DonationRepository $donationRepository, MembreRepository $membreRepository, UserRepository $userRepository)
     {
         $oldestAnimals = $animalRepository->getThreeOldestAnimals();
         $newestAnimals = $animalRepository->getThreeNewestAnimals();
         $events = $eventRepository->findAll();
         $donations = $donationRepository->findAll();
-        $donorsMail = [];
-        for ($i=0; $i < count($donations); $i++){
-           $tmp = $userRepository->findByMemberId($donations[$i]->getMemberDonatingId());
-           array_push($donorsMail, $tmp[0]->getEmail());
-        }
-
+       
         return $this->render('member/index.html.twig', [
             'controller_name' => 'MemberController',
             'oldestAnimals' => $oldestAnimals,
             'newestAnimals' => $newestAnimals,
             'events' => $events,
-            'donations' => $donations,
-            'donorsMail' => $donorsMail
+            'donations' => $donations
         ]);
     }
 
@@ -96,10 +90,10 @@ class MemberController extends AbstractController
         $donation = new Donation();
         $makeDonationForm = $this->createForm(MakeDonationType::class, $donation);
         $makeDonationForm->handleRequest($request);
-        $membreId = $membreRepository->findOneByUser($this->getUser());
+        $membre = $membreRepository->findOneByUser($this->getUser());
         if ($makeDonationForm->isSubmitted()) {
             if ($makeDonationForm->isValid()){
-                $donation->setMemberDonatingId($membreId);
+                $donation->setMemberDonating($membre);
                 $donation->setDate(new \DateTime('now'));
                 $entityManager->persist($donation);
                 $entityManager->flush();

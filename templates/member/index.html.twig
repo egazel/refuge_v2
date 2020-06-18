@@ -4,7 +4,7 @@
         <title>Interface Membre</title>
         <meta name="viewport" content="width=device-width, user-scalable=no">
 
-        {% include "partials/member_header.html.twig" %}
+        {% include "partials/member_header.html.twig" %}    
 
     </head>
     <body>
@@ -33,14 +33,14 @@
                     <div class="card mt-2 mb-2" style="height:19rem;">
                         <div class="card-header">
                             <i class="fas fa-calendar-alt"></i>
-                                Ils ont été généreux !<br>  
+                                Merci pour vos donations !<br>  
                         </div>
                         <ul class="list-group list-group-flush"  style="overflow:auto;">
                                 {% if donations|length > 0 %}
                                     {% for i in 0..donations|length-1 %}
-                                        <li class="list-group-item">{{donorsMail[i]}} - {{donations[i].amount}}€</li>
+                                        {% set display = (donations|length)-1-i %}
+                                        <li class="list-group-item">{{donations[display].date.format('d/m/Y')}} - {{donations[display].amount}}€</li>
                                     {% endfor %}
-
                                 {% else %}
                                     <li class="list-group-item">Aucune donation enregistrée. Soyez le premier !</li>
                                 {% endif %}

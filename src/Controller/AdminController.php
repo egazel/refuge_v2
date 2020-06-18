@@ -40,8 +40,10 @@ class AdminController extends AbstractController
         $donorsMail = [];
         $donorsAmount = [];
         for ($i=0; $i < count($donors); $i++){
-           $tmp = $userRepository->findByMemberId($donors[$i]['member_donating_id']);
-           array_push($donorsMail, $tmp[0]->getEmail());
+
+            $donatingMember= $membreRepository->findOneById($don->memberDonating->getId());
+            $userCorresponding = $userRepository->findByMember($donatingMemberId);
+            array_push($donorsMail, $userCorresponding->getEmail());
         }
         $nextEvent = $eventRepository->findOneByNextDate();
         $participatingMembers = [];
@@ -180,14 +182,14 @@ class AdminController extends AbstractController
     * @IsGranted("ROLE_ADMIN")
     * @Route("/admin/donationsList", name="donationsList")
     */
-    public function donationsList(DonationRepository $donationRepository, UserRepository $userRepository)
+    public function donationsList(DonationRepository $donationRepository, UserRepository $userRepository, MembreRepository $membreRepository)
     {
         $donations = $donationRepository->findAll();
         $donationMailsArray = [];
         foreach ($donations as $don) {
          
-            $donatingMemberId= $don->memberDonating->getId();
-            $userCorresponding = $userRepository->findByMemberId($donatingMemberId);
+            $donatingMember= $membreRepository->findOneById($don->memberDonating->getId());
+            $userCorresponding = $userRepository->findByMember($donatingMemberId);
             $mail = $userCorresponding[0]->getEmail();
             array_push($donationMailsArray, $mail);
         }
@@ -210,6 +212,40 @@ class AdminController extends AbstractController
         return $this->json($animalJson, 200, ['Content-Type' => 'application/json']);
     }
 
+    
+    /** 
+    * @IsGranted("ROLE_ADMIN")
+    * @Route("/injectUserToModal", name="injectUserToModal")
+    */
+    public function injectUserToModal(UserRepository $userRepository, Request $request, SerializerInterface $serializerInterface)
+    {
+        $userDetail = $userRepository->findOneById($request->query->get('id'));
+        $userJson = $serializerInterface->serialize($userDetail, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }
+        ]);
+        return $this->json($userJson, 200, ['Content-Type' => 'application/json']);
+    }
+
+           
+    /** 
+    * @IsGranted("ROLE_ADMIN")
+    * @Route("/deleteUser/{id}", name="deleteUser")
+    */
+    public function deleteUser($id, UserRepository $userRepository, MembreRepository $membreRepository, Request $request, EntityManagerInterface $entityManager)
+    {
+        $user = $userRepository->find($id);
+        $membre = $membreRepository->findByUser($user);
+        $entityManager->remove($membre[0]);
+        $entityManager->remove($user);
+        $entityManager->flush();
+        $this->addFlash(
+            'success',
+            'L\'utilisateur a bien été supprimé !'
+        );
+        return $this->redirectToRoute('userList');
+    }
 
        
     /** 

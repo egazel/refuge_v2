@@ -27,10 +27,6 @@ class Donation
     private $date;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $member_donating_id;
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Membre", inversedBy="donation")
      */
     public $memberDonating;
@@ -74,18 +70,5 @@ class Donation
         $this->memberDonating = $memberDonating;
 
         return $this;
-    }
-
-    public function setMemberDonatingId(?int $memberDonatingId): self
-    {
-        $this->member_donating_id = $memberDonatingId;
-
-        return $this;
-    }
-
-    public function getMemberDonatingId(): ?int
-    {
-
-        return $this->member_donating_id;
     }
 }
