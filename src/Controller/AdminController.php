@@ -197,9 +197,9 @@ class AdminController extends AbstractController
 
     /** 
     * @IsGranted("ROLE_ADMIN")
-    * @Route("/openDeletionModal", name="openDeletionModal")
+    * @Route("/injectAnimalToModal", name="injectAnimalToModal")
     */
-    public function openDeletionModal(AnimalRepository $animalRepository, Request $request, SerializerInterface $serializerInterface)
+    public function injectAnimalToModal(AnimalRepository $animalRepository, Request $request, SerializerInterface $serializerInterface)
     {
         $animalDetail = $animalRepository->findOneById($request->query->get('id'));
         $animalJson = $serializerInterface->serialize($animalDetail, 'json', [

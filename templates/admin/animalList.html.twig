@@ -46,7 +46,7 @@
                                 <td>{{animal.adoptionPrice}} €</td>
                                 <td>{{animal.dateAdd.format('d/m/Y')}}</td>
                                 <td style="flex-direction:row;">
-                                    <button class="btn btn-success"  data-toggle="modal" data-target="#animalDescriptionModal"><i class="fas fa-ellipsis-h"></i></button>
+                                    <button class="btn btn-success" onClick="onClickMoreInfos({{animal.id}})" data-toggle="modal" data-target="#animalDescriptionModal"><i class="fas fa-ellipsis-h"></i></button>
                                     <button class="btn btn-warning" data-toggle="modal" data-target="#editAnimalModalForm"><i class="fas fa-edit"></i></button>
                                     <button class="btn btn-danger" onClick="onClickDeleteModalConfirmationOpen({{animal.id}})" data-toggle="modal" data-target="#deleteAnimalModalForm"><i class="fas fa-trash"></i></button>
                                 </td>
@@ -237,20 +237,8 @@
 
     <div class="modal fade" id="animalDescriptionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Description :</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>{animal.description}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Supprimer</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                </div>
+            <div class="modal-content" id="contentMore">
+                
             </div>
         </div>
     </div>
@@ -273,7 +261,7 @@
 
     function onClickDeleteModalConfirmationOpen(animalId){
         $('#contentDelete').html('');
-        const url="{{ path('openDeletionModal') }}"; 
+        const url="{{ path('injectAnimalToModal') }}"; 
         axios.get(url+"?id="+animalId).then(function(response) {
             var d = jQuery.parseJSON(response.data);
             var modalContent = 
@@ -291,6 +279,61 @@
                     '<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>'+
                 '</div>'
             $('#contentDelete').append(modalContent);
+        })
+    } 
+
+    function onClickMoreInfos(animalId){
+        $('#contentMore').html('');
+        const url="{{ path('injectAnimalToModal') }}"; 
+        axios.get(url+"?id="+animalId).then(function(response) {
+            var d = jQuery.parseJSON(response.data);
+            if (d.okKids) {
+                var okKids = "☑ Ok enfants";
+            } else {
+                var okKids = "☐ Pas ok enfants";
+            };
+
+            if (d.okKids) {
+                var okDogs = "☑ Ok chiens";
+            } else {
+                var okDogs = "☐ Pas ok chiens";
+            };
+
+            if (d.okCats) {
+                var okCats = "☑ Ok chats";
+            } else {
+                var okCats = "☐ Pas ok chats";
+            };
+
+            if (d.needCare){
+                var needCare = "⚠️ "+ d.name + " a besoin d'un traitement médical spécifique. ⚠️<br>";
+            } else {
+                var needCare="";
+            }
+    
+            if (d.isHosted){
+                var isHosted = d.name + " est actuellement en famille d'accueil.";
+            } else {
+                var isHosted = d.name + " n'est actuellement pas en famille d'accueil.";
+            }
+            var modalContent = 
+                '<div class="modal-header">'+
+                    '<h5 class="modal-title" id="exampleModalLongTitle">Plus d\'informations sur '+d.name+'.</h5>'+
+                    '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
+                    '<span aria-hidden="true">&times;</span>'+
+                    '</button>'+
+                '</div>'+
+                '<div class="modal-body">'+
+                    '<div>'+
+                    okKids+' '+okDogs+' '+okCats+'<br>'+
+                    '</div>'+
+                    d.description+'<br>'+
+                '</div>'+
+                '<div class="modal-footer">'+
+                    isHosted+'<br>'+
+                    needCare+
+                '</div>'
+            $('#contentMore').append(modalContent);
         })
     } 
 
