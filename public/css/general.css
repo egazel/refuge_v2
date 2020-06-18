@@ -5,3 +5,12 @@
 .rounded {
     border-radius:5px;
 }
+
+body {
+    background-image: url("/img/index_bg.jpg");
+    height:100%;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment: fixed;
+    background-size:cover;
+}
