@@ -35,7 +35,7 @@ class DonationRepository extends ServiceEntityRepository
         ;
     }
     */
-
+    // TODO CHECK SI LA FONCTION EST BONNE...
     public function getThreeHighestDonors()
     {
         return $this->createQueryBuilder('d')

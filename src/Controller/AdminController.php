@@ -32,18 +32,15 @@ class AdminController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      * @Route("/admin", name="admin")
      */
-    // TODO Sortir un max de services des fonctions
     public function index(DonationRepository $donationRepository, EventRepository $eventRepository, MembreRepository $membreRepository, FARepository $FARepository, UserRepository $userRepository)
     {
-
+        //TODO FIX LE DISPLAY DES DONATEURS C'EST PAS BON
         $donors = $donationRepository->getThreeHighestDonors();
         $donorsMail = [];
         $donorsAmount = [];
         for ($i=0; $i < count($donors); $i++){
-
-            $donatingMember= $membreRepository->findOneById($don->memberDonating->getId());
-            $userCorresponding = $userRepository->findByMember($donatingMemberId);
-            array_push($donorsMail, $userCorresponding->getEmail());
+            $tmp = $userRepository->findByMemberId($donors[$i]['member_donating_id']);
+            array_push($donorsMail, $tmp[0]->getEmail());
         }
         $nextEvent = $eventRepository->findOneByNextDate();
         $participatingMembers = [];
@@ -188,8 +185,8 @@ class AdminController extends AbstractController
         $donationMailsArray = [];
         foreach ($donations as $don) {
          
-            $donatingMember= $membreRepository->findOneById($don->memberDonating->getId());
-            $userCorresponding = $userRepository->findByMember($donatingMemberId);
+            $donatingMember= $don->getMemberDonating();
+            $userCorresponding = $userRepository->findByMemberId($donatingMember->getId());
             $mail = $userCorresponding[0]->getEmail();
             array_push($donationMailsArray, $mail);
         }

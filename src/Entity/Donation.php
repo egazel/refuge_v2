@@ -27,6 +27,10 @@ class Donation
     private $date;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $member_donating_id;
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Membre", inversedBy="donation")
      */
     public $memberDonating;
