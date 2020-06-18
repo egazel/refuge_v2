@@ -63,9 +63,14 @@ class MemberController extends AbstractController
      */
     public function moreInformations(AnimalRepository $animalRepository, Request $request, SerializerInterface $serializerInterface)
     {
+
         $animalDetail = $animalRepository->findOneById($request->query->get('id'));
-        $animalJson = $serializerInterface->serialize($animalDetail, 'json');
-        return $this->json($animalJson);
+        $animalJson = $serializerInterface->serialize($animalDetail, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }
+        ]);
+        return $this->json($animalJson, 200, ['Content-Type' => 'application/json']);
     }
 
     /**
