@@ -34,14 +34,13 @@ class AdminController extends AbstractController
      */
     public function index(DonationRepository $donationRepository, EventRepository $eventRepository, MembreRepository $membreRepository, FARepository $FARepository, UserRepository $userRepository)
     {
-        //TODO FIX LE DISPLAY DES DONATEURS C'EST PAS BON
-        $donors = $donationRepository->getThreeHighestDonors();
-        $donorsMail = [];
-        $donorsAmount = [];
-        for ($i=0; $i < count($donors); $i++){
-            $tmp = $userRepository->findByMemberId($donors[$i]['member_donating_id']);
-            array_push($donorsMail, $tmp[0]->getEmail());
-        }
+        // $donors = $donationRepository->getThreeHighestDonors();
+        // $donorsMail = [];
+        // $donorsAmount = [];
+        // for ($i=0; $i < count($donors); $i++){
+        //     $tmp = $userRepository->findByMemberId($donors[$i]['member_donating_id']);
+        //     array_push($donorsMail, $tmp[0]->getEmail());
+        // }
         $nextEvent = $eventRepository->findOneByNextDate();
         $participatingMembers = [];
         if ($nextEvent != null){
@@ -62,14 +61,20 @@ class AdminController extends AbstractController
         for ($i=0; $i<count($participatingMembers); $i++){
             array_push($participatingUsersMail, $participatingMembers[$i]->getUser()->getEmail());
         }
-        $donations = $this->getDoctrine()->getRepository('App:Donation')->findThreeByLatest();
+        // $donations = $this->getDoctrine()->getRepository('App:Donation')->findThreeByLatest();
+        $donations = $this->getDoctrine()->getRepository('App:Donation')->findAll();
+        $donationsTotal=0;
+        for ($i=0;$i<count($donations);$i++){
+            $donationsTotal+=$donations[$i]->getAmount();
+        }
         return $this->render('admin/index.html.twig',
         ['nextEvent' => $nextEvent, 'participatingUsers' => $participatingUsersMail,
          'donations' => $donations,
          'percentageOfMembers' => $percentageOfMembers,
          'percentageOfFA' => $percentageOfFA,
-         'donors' => $donors,
-         'donorsMail' => $donorsMail]
+         'donationsTotal' => $donationsTotal]
+        //  'donors' => $donors,
+        //  'donorsMail' => $donorsMail]
         );
     }
 
@@ -230,11 +235,35 @@ class AdminController extends AbstractController
     * @IsGranted("ROLE_ADMIN")
     * @Route("/deleteUser/{id}", name="deleteUser")
     */
-    public function deleteUser($id, UserRepository $userRepository, MembreRepository $membreRepository, Request $request, EntityManagerInterface $entityManager)
+    public function deleteUser($id, UserRepository $userRepository, FARepository $FARepository, MembreRepository $membreRepository, Request $request, EntityManagerInterface $entityManager)
     {
         $user = $userRepository->find($id);
         $membre = $membreRepository->findByUser($user);
-        $entityManager->remove($membre[0]);
+        if ($membre != []){
+            $donations = $membre[0]->getDonation();
+            if (count($donations)>0){
+                for($i=0;$i<count($donations);$i++){
+                    $entityManager->remove($donations[$i]);
+                }
+            }
+
+            $events = $membre[0]->getEvent();
+            if (count($events)>0){
+                for($i=0;$i<count($events);$i++){
+                    $entityManager->remove($events[$i]);
+                }
+            }
+
+            $entityManager->remove($membre[0]);
+        }
+
+        $fa = $FARepository->findByUser($user);
+        if ($fa != []){
+            // TODO check et remove les animaux hebergés -> plus tard
+            $entityManager->remove($fa[0]);
+        }
+
+
         $entityManager->remove($user);
         $entityManager->flush();
         $this->addFlash(
