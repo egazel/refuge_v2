@@ -24,11 +24,11 @@
             <div class="row">
                 {% if animals|length > 0 %}
                     {% for animal in animals %}
-                        <div class="col-sm-3 mt-2 mb-2">
-                            <div class="card"  style="size:100%;">
+                        <div class="col-sm-4 mt-2 mb-2">
+                            <div class="card" >
                                 <!-- Card image -->
                                 {% if animal.imageLinks|length > 0 %}
-                                    <img class="card-img-top shadow" src="{{asset(animal.imageLinks[0])}}" alt="Card image cap">
+                                    <img class="card-img-top shadow"  style="display:block; max-height:100%; max-width:100%; width:auto; height:auto;"  src="{{asset(animal.imageLinks[0])}}" alt="Card image cap">
                                 {% else %}
                                      <img class="card-img-top" src="http://via.placeholder.com/300x400" alt="Card image cap">
                                 {% endif %}

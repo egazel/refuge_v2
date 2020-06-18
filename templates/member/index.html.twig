@@ -30,7 +30,7 @@
                                 <a class="btn btn-warning m-*-auto" href="{{ path('eventsToCome') }}"><i class="fas fa-plus"></i> Voir plus</a> 
                             </div>
                     </div>
-                    <div class="card mt-4 mb-2" style="height:19rem;">
+                    <div class="card mt-2 mb-2" style="height:19rem;">
                         <div class="card-header">
                             <i class="fas fa-calendar-alt"></i>
                                 Ils ont été généreux !<br>  
@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="text-center">
-                                        <img style="width:30%;" src="{{asset(new.imageLinks[0])}}"/>
+                                        <img style="max-height:7rem;" src="{{asset(new.imageLinks[0])}}"/>
                                     </div>
                                 </div>
                             </div>
@@ -76,11 +76,11 @@
                         {% if oldestAnimals|length > 0 %}
                             <div class="card mb-2">
                                 <div class="card-header text-center">
-                                        <b>{{old.name}}</b> - En attente depuis le {{old.dateAdd.format('d/m/Y')}}
+                                        <b>{{old.name}}</b> - Depuis le {{old.dateAdd.format('d/m/Y')}}
                                 </div>
                                 <div class="card-body">
                                     <div class="text-center">
-                                        <img class="align-right" style="width:30%;" src="{{asset(old.imageLinks[0])}}"/>
+                                        <img style="max-height:7rem;" src="{{asset(old.imageLinks[0])}}"/>
                                     </div>
                                 </div>
                             </div>
