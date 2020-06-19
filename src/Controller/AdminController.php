@@ -34,13 +34,14 @@ class AdminController extends AbstractController
      */
     public function index(DonationRepository $donationRepository, EventRepository $eventRepository, MembreRepository $membreRepository, FARepository $FARepository, UserRepository $userRepository)
     {
-        // $donors = $donationRepository->getThreeHighestDonors();
-        // $donorsMail = [];
-        // $donorsAmount = [];
-        // for ($i=0; $i < count($donors); $i++){
-        //     $tmp = $userRepository->findByMemberId($donors[$i]['member_donating_id']);
-        //     array_push($donorsMail, $tmp[0]->getEmail());
-        // }
+        $donors = $donationRepository->getThreeHighestDonors();
+        $donorsMail = [];
+
+        foreach ($donors as $donor) {
+            $member = $donor[0]->getMemberDonating();
+            $tmp = $member->getUser();
+            array_push($donorsMail, $tmp->getEmail());
+        }
 
         $newUsersArray = [];
         for ($i=0; $i<=6; $i++){
@@ -80,9 +81,9 @@ class AdminController extends AbstractController
          'percentageOfMembers' => $percentageOfMembers,
          'percentageOfFA' => $percentageOfFA,
          'donationsTotal' => $donationsTotal,
-         'newUsersArray' => $newUsersArray]
-        //  'donors' => $donors,
-        //  'donorsMail' => $donorsMail]
+         'newUsersArray' => $newUsersArray,
+         'donors' => $donors,
+         'donorsMail' => $donorsMail]
         );
     }
 

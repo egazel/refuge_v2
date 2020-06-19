@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    {# <div class="card" >
+                    <div class="card" >
                         <div class="card-header">
                             <i class="fas fa-hand-holding-usd"></i>
                             Plus gros donateurs
@@ -60,7 +60,7 @@
                             {% endif %}
                         </ul>
                     </div>
-
+                    {# 
                     <div class="card mt-5" >
                         <div class="card-header">
                             <i class="fas fa-dollar-sign"></i>
@@ -75,7 +75,7 @@
                         </ul>
                     </div> #}
 
-                    <div class="card mb-2" style="height:25rem">
+                    <div class="card mt-3 mb-5" style="max-height:12rem">
                         <div class="card-header">
                             <i class="fas fa-dollar-sign"></i>
                             Donations des membres
@@ -85,14 +85,13 @@
                                 {% for donation in donations %}
                                     <li class="list-group-item">{{donation.date.format('d/m/Y')}} - {{donation.amount}}€</li>
                                 {% endfor %}
-                                <div class="card-footer">
-                                    Total des donations : {{donationsTotal}}€
-                                </div>
                             {% else %}
                                 <li class="list-group-item">Aucune donation enregistrée.</li>
                             {% endif %}
-                        </ul>
-                        
+                        </ul> 
+                        <div class="card-footer">
+                            Total des donations : {{donationsTotal}}€
+                        </div>
                     </div>
                 </div>
             </div>
