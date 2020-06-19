@@ -26,7 +26,7 @@
                     {% if donations|length != 0 %}
                         {% for i in 0..donations|length-1 %}
                             <tr>
-                                <th scope="row">{{donations[i].id}}</th>
+                                <th scope="row">{{loop.index0 + 1}}</th>
                                 <td>{{donations[i].amount}}€</td>
                                 <td>{{donations[i].date.format('d/m/Y')}}</td>
                             <td>{{donationsIds[i]}}</td>

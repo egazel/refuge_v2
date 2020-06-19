@@ -35,7 +35,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->persist($user);
         $this->_em->flush();
     }
-    // TODO Fix cette fonction -> ptetre jsp
+    // TODO DEPRECATED NON WORKING FUNCTION
     public function findByMemberId($memberId)
     {
         return $this->createQueryBuilder('u')

@@ -69,7 +69,7 @@ class AdminController extends AbstractController
             array_push($participatingUsersMail, $participatingMembers[$i]->getUser()->getEmail());
         }
         // $donations = $this->getDoctrine()->getRepository('App:Donation')->findThreeByLatest();
-        $donations = $this->getDoctrine()->getRepository('App:Donation')->findAll();
+        $donations = $donationRepository->findAll();
         $donationsTotal=0;
         for ($i=0;$i<count($donations);$i++){
             $donationsTotal+=$donations[$i]->getAmount();
@@ -199,8 +199,9 @@ class AdminController extends AbstractController
         foreach ($donations as $don) {
          
             $donatingMember= $don->getMemberDonating();
-            $userCorresponding = $userRepository->findByMemberId($donatingMember->getId());
-            $mail = $userCorresponding[0]->getEmail();
+            // $userCorresponding = $userRepository->findByMember($donatingMember);
+            $userCorresponding = $donatingMember->getUser();
+            $mail = $userCorresponding->getEmail();
             array_push($donationMailsArray, $mail);
         }
         return $this->render('admin/donationsList.html.twig', 
@@ -246,6 +247,8 @@ class AdminController extends AbstractController
     public function deleteUser($id, UserRepository $userRepository, FARepository $FARepository, MembreRepository $membreRepository, Request $request, EntityManagerInterface $entityManager)
     {
         $user = $userRepository->find($id);
+
+        // Check if the user corresponds to a member and deletes the foreign keys first
         $membre = $membreRepository->findByUser($user);
         if ($membre != []){
             $donations = $membre[0]->getDonation();
@@ -265,6 +268,7 @@ class AdminController extends AbstractController
             $entityManager->remove($membre[0]);
         }
 
+        // Check if the user corresponds to a foster family and deletes the foreign keys first
         $fa = $FARepository->findByUser($user);
         if ($fa != []){
             // TODO check et remove les animaux hebergés -> plus tard
