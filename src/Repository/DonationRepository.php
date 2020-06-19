@@ -41,7 +41,7 @@ class DonationRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('d')
             ->select('d', 'sum(d.amount)')
             ->groupBy('d.member_donating_id')
-            ->orderBy('d.amount','DESC')
+            ->orderBy('sum(d.amount)','DESC')
             ->setMaxResults(3)
             ->getQuery()
             ->getResult()
