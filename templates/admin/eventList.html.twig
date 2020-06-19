@@ -31,7 +31,7 @@
                     {% for event in events %}
                         <tr>
                             <th scope="row">{{loop.index0 + 1}}</th>
-                            <td>{{ event.date.format('d/m/Y - h:m') }}</td>
+                            <td>{{ event.date.format('d/m/Y') }}</td>
                             <td>{{ event.location }}</td>
                         </tr>
                     {% else %}

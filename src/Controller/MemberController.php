@@ -27,8 +27,8 @@ class MemberController extends AbstractController
         $oldestAnimals = $animalRepository->getThreeOldestAnimals();
         $newestAnimals = $animalRepository->getThreeNewestAnimals();
         $events = $eventRepository->findAll();
-        $donations = $donationRepository->findAll();
-       
+        $membre = $membreRepository->findOneByUser($this->getUser());
+        $donations = $donationRepository->findByMemberDonating($membre);
         return $this->render('member/index.html.twig', [
             'controller_name' => 'MemberController',
             'oldestAnimals' => $oldestAnimals,
