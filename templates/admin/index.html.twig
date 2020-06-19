@@ -82,8 +82,9 @@
                         </div>
                         <ul class="list-group list-group-flush"  style="overflow:auto;">
                             {% if donations|length > 0 %}
-                                {% for donation in donations %}
-                                    <li class="list-group-item">{{donation.date.format('d/m/Y')}} - {{donation.amount}}€</li>
+                                {% for i in 0..donations|length-1 %}
+                                    {% set display = (donations|length)-1-i %}
+                                    <li class="list-group-item">{{donations[display].date.format('d/m/Y')}} - {{donations[display].amount}}€</li>
                                 {% endfor %}
                             {% else %}
                                 <li class="list-group-item">Aucune donation enregistrée.</li>
