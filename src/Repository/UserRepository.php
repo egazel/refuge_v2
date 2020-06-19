@@ -55,6 +55,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getSingleScalarResult()
         ;
     }
+
+    public function getUsersByDay($dayNumber)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u)')
+            ->where('u.registerDate = CURRENT_DATE() + :val')
+            ->setParameter('val',$dayNumber)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

@@ -12,12 +12,15 @@
         <div class="container border shadow bg-white rounded slightlyOpaque">
             <div class="row mt-5">
                 <div class="col-sm-4">
-                    <h5 class="text-center"><i class="fas fa-users"></i> Répartition des membres</h5>
-                    <canvas id="doughnutChart" style="height:40%; width:40%;"></canvas>
+                    <h5 class="text-center"><i class="fas fa-user"></i> Répartition des membres</h5>
+                    <canvas id="doughnutChart" ></canvas>
                     {# TODO set another chart with members in the past 7 days (or maybe last month list of all the new members) #}
+                    <h5 class="text-center mt-1"><i class="fas fa-users"></i> Nouveaux membres <h5>
+                    <canvas id="lineChart"></canvas>
+
                 </div>
                 <div class="col-sm-4">
-                    <div class="card" style="height:25rem">
+                    <div class="card mb-2" style="height:25rem">
                         <div class="card-header">
                             <i class="far fa-calendar-alt"></i>   
                             
@@ -72,7 +75,7 @@
                         </ul>
                     </div> #}
 
-                    <div class="card" style="height:25rem">
+                    <div class="card mb-2" style="height:25rem">
                         <div class="card-header">
                             <i class="fas fa-dollar-sign"></i>
                             Donations des membres
@@ -82,13 +85,14 @@
                                 {% for donation in donations %}
                                     <li class="list-group-item">{{donation.date.format('d/m/Y')}} - {{donation.amount}}€</li>
                                 {% endfor %}
+                                <div class="card-footer">
+                                    Total des donations : {{donationsTotal}}€
+                                </div>
                             {% else %}
                                 <li class="list-group-item">Aucune donation enregistrée.</li>
                             {% endif %}
                         </ul>
-                        <div class="card-footer">
-                        Total des donations : {{donationsTotal}}€
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -111,5 +115,55 @@
         options: {
             responsive: true
         }
+    });
+
+//line
+    var ctxL = document.getElementById("lineChart").getContext('2d');
+    var dateNames = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];
+    var date0 = new Date();                    
+    var date1 = new Date();
+    var date2 = new Date();
+    var date3 = new Date();
+    var date4 = new Date();
+    var date5 = new Date();
+    var date6 = new Date();
+    var beforedate = new Date();
+    
+    date0.setDate(beforedate.getDate()-0);
+    day0 = date0.getDay();
+    date1.setDate(beforedate.getDate()-1);
+    day1 = date1.getDay();
+    date2.setDate(beforedate.getDate()-2);
+    day2 = date2.getDay();
+    date3.setDate(beforedate.getDate()-3);
+    day3 = date3.getDay();
+    date4.setDate(beforedate.getDate()-4);
+    day4 = date4.getDay();
+    date5.setDate(beforedate.getDate()-5);
+    day5 = date5.getDay();
+    date6.setDate(beforedate.getDate()-6);
+    day6 = date6.getDay();
+
+    
+    var myLineChart = new Chart(ctxL, {
+    type: 'line',
+    data: {
+    labels: [dateNames[day6], dateNames[day5], dateNames[day4], dateNames[day3], dateNames[day2], dateNames[day1], dateNames[day0] ],
+    datasets: [{
+    label: "Membres",
+    data: [{{newUsersArray[6]}}, {{newUsersArray[5]}}, {{newUsersArray[4]}}, {{newUsersArray[3]}}, {{newUsersArray[2]}}, {{newUsersArray[1]}}, {{newUsersArray[0]}}],
+    backgroundColor: [
+    'rgba(105, 0, 132, .2)',
+    ],
+    borderColor: [
+    'rgba(200, 99, 132, .7)',
+    ],
+    borderWidth: 2
+    },
+    ]
+    },
+    options: {
+    responsive: true
+    }
     });
 </script>

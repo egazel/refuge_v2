@@ -41,6 +41,13 @@ class AdminController extends AbstractController
         //     $tmp = $userRepository->findByMemberId($donors[$i]['member_donating_id']);
         //     array_push($donorsMail, $tmp[0]->getEmail());
         // }
+
+        $newUsersArray = [];
+        for ($i=0; $i<=6; $i++){
+            $usersYesterday = $userRepository->getUsersByDay(-$i);
+            array_push($newUsersArray, $usersYesterday);
+        }
+
         $nextEvent = $eventRepository->findOneByNextDate();
         $participatingMembers = [];
         if ($nextEvent != null){
@@ -72,7 +79,8 @@ class AdminController extends AbstractController
          'donations' => $donations,
          'percentageOfMembers' => $percentageOfMembers,
          'percentageOfFA' => $percentageOfFA,
-         'donationsTotal' => $donationsTotal]
+         'donationsTotal' => $donationsTotal,
+         'newUsersArray' => $newUsersArray]
         //  'donors' => $donors,
         //  'donorsMail' => $donorsMail]
         );
