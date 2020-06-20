@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Entity\Animal;
 use App\Entity\Gerant;
 use App\Entity\Membre;
+use App\Entity\HouseType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -85,6 +86,17 @@ class AppFixtures extends Fixture
         $race->setName("Européen");
         $manager->persist($race);
 
+        $houseType = new HouseType();
+        $houseType->setName("Appartement");
+        $manager->persist($houseType);
+
+        $houseType2 = new HouseType();
+        $houseType2->setName("Maison sans jardin");
+        $manager->persist($houseType2);
+
+        $houseType3 = new HouseType();
+        $houseType3->setName("Maison avec jardin");
+        $manager->persist($houseType3);
         // for ($i=0; $i<20; $i++){
         //     $animal = new Animal();
         //     $animal->setType("Chat");
