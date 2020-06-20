@@ -20,6 +20,7 @@
                         <th scope="col"><i class="fas fa-sort"></i> #</th>
                         <th scope="col"><i class="fas fa-sort"></i> Date</th>
                         <th scope="col"><i class="fas fa-sort"></i> Lieu</th>
+                        <th scope="col"></th>
                         <th scope="col">Je participe</th>
                         </tr>
                     </thead>
@@ -27,13 +28,13 @@
                         {% if events|length > 0 %}
                             {% for event in events %}
                                 <tr>
-                                <th scope="row">{{loop.index0 + 1}}</th>
-                                <td>{{event.date.format('d/m/Y - h:m')}}</td>
-                                <td>{{event.location}}</td>
-                                <td>
-                                    <button class="btn btn-success"><i class="fas fa-check"></i></button>
-                                </td>
-
+                                    <th scope="row">{{loop.index0 + 1}}</th>
+                                    <td>{{event.date.format('d/m/Y - h:m')}}</td>
+                                    <td>{{event.location}}</td>
+                                    <td></td>
+                                    <td>
+                                        <button class="btn btn-success btn-small"><i class="fas fa-check"></i></button>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         {% else %}
@@ -71,12 +72,3 @@
         </div>
     </div>
 </html>
-<script>
-    $(document).ready(function () {
-        $('#selectedColumn').DataTable({
-            "scrollY": "350px",
-            "scrollCollapse": true,
-        });
-        $('.dataTables_length').addClass('bs-select');
-    });
-</script>

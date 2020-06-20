@@ -211,20 +211,41 @@ class AdminController extends AbstractController
 
     /** 
     * @IsGranted("ROLE_ADMIN")
-    * @Route("/injectAnimalToModal", name="injectAnimalToModal")
+    * @Route("/injectEventToModal", name="injectEventToModal")
     */
-    public function injectAnimalToModal(AnimalRepository $animalRepository, Request $request, SerializerInterface $serializerInterface)
+    public function injectEventToModal(EventRepository $eventRepository, Request $request, SerializerInterface $serializerInterface)
     {
-        $animalDetail = $animalRepository->findOneById($request->query->get('id'));
-        $animalJson = $serializerInterface->serialize($animalDetail, 'json', [
+        $eventDetail = $eventRepository->findOneById($request->query->get('id'));
+        $eventJson = $serializerInterface->serialize($eventDetail, 'json', [
             'circular_reference_handler' => function ($object) {
                 return $object->getId();
             }
         ]);
-        return $this->json($animalJson, 200, ['Content-Type' => 'application/json']);
+        return $this->json($eventJson, 200, ['Content-Type' => 'application/json']);
     }
 
-    
+    /** 
+    * @IsGranted("ROLE_ADMIN")
+    * @Route("/deleteEvent/{id}", name="deleteEvent")
+    */
+    public function deleteEvent($id, UserRepository $userRepository, EventRepository $eventRepository, MembreRepository $membreRepository, Request $request, EntityManagerInterface $entityManager)
+    {
+        $event = $eventRepository->findOneById($id);
+        $membres = $event->getParticipatingMembers();
+        foreach ($membres as $membre) {
+            $event->removeParticipatingMember($membre);
+        }
+
+        $entityManager->remove($event);
+        $entityManager->flush();
+        $this->addFlash(
+            'success',
+            'L\'évenement a bien été supprimé !'
+        );
+        return $this->redirectToRoute('eventList');
+    }
+           
+        
     /** 
     * @IsGranted("ROLE_ADMIN")
     * @Route("/injectUserToModal", name="injectUserToModal")
@@ -240,7 +261,6 @@ class AdminController extends AbstractController
         return $this->json($userJson, 200, ['Content-Type' => 'application/json']);
     }
 
-           
     /** 
     * @IsGranted("ROLE_ADMIN")
     * @Route("/deleteUser/{id}", name="deleteUser")
@@ -287,6 +307,21 @@ class AdminController extends AbstractController
     }
 
        
+        /** 
+    * @IsGranted("ROLE_ADMIN")
+    * @Route("/injectAnimalToModal", name="injectAnimalToModal")
+    */
+    public function injectAnimalToModal(AnimalRepository $animalRepository, Request $request, SerializerInterface $serializerInterface)
+    {
+        $animalDetail = $animalRepository->findOneById($request->query->get('id'));
+        $animalJson = $serializerInterface->serialize($animalDetail, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }
+        ]);
+        return $this->json($animalJson, 200, ['Content-Type' => 'application/json']);
+    }
+
     /** 
     * @IsGranted("ROLE_ADMIN")
     * @Route("/deleteAnimal/{id}", name="deleteAnimal")

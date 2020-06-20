@@ -25,6 +25,8 @@
                         <th scope="col"><i class="fas fa-sort"></i> #</th>
                         <th scope="col"><i class="fas fa-sort"></i> Date</th>
                         <th scope="col"><i class="fas fa-sort"></i> Lieu</th>
+                        <th scope="col"></th>
+                        <th scope="col">Edition</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,10 +35,17 @@
                             <th scope="row">{{loop.index0 + 1}}</th>
                             <td>{{ event.date.format('d/m/Y') }}</td>
                             <td>{{ event.location }}</td>
+                            <td></td>
+                            <td>
+                                <button class="btn btn-warning" data-toggle="modal" data-target="#editEventForm"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-danger" onClick="onClickDeleteEventModal({{event.id}})" data-toggle="modal" data-target="#deleteEventModalForm"><i class="fas fa-trash"></i></button>
+                            </td>
                         </tr>
                     {% else %}
                         <tr>
                             <th scope="row"> Aucun événement à venir !</th>
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td></td>
                         </tr>
@@ -79,13 +88,46 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="deleteEventModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" id="contentDelete">
+            </div>
+        </div>
+    </div>
+
 </html>
+
 <script>
-    $(document).ready(function () {
-        $('#selectedColumn').DataTable({
-            "scrollY": "350px",
-            "scrollCollapse": true,
-        });
-        $('.dataTables_length').addClass('bs-select');
+$(document).ready(function () {
+    $('#selectedColumn').DataTable({
+        "scrollY": "350px",
+        "scrollCollapse": true,
     });
+    $('.dataTables_length').addClass('bs-select');
+});
+
+function onClickDeleteEventModal(eventId){
+        $('#contentDelete').html('');
+        const url="{{ path('injectEventToModal') }}";
+        axios.get(url+"?id="+eventId).then(function(response) {
+            var d = jQuery.parseJSON(response.data);
+            var modalContent = 
+                '<div class="modal-header">'+
+                    '<h5 class="modal-title" id="exampleModalLongTitle">Supprimer un évenement</h5>'+
+                    '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
+                    '<span aria-hidden="true">&times;</span>'+
+                    '</button>'+
+                '</div>'+
+                '<div class="modal-body">'+
+                    'Voulez-vous vraiment supprimer l\'évenement du '+d.date+' ?'+
+                '</div>'+
+                '<div class="modal-footer">'+
+                    '<a type="button" class="btn btn-primary" href="/deleteEvent/'+d.id+'">Supprimer</a>'+
+                    '<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>'+
+                '</div>'
+            $('#contentDelete').append(modalContent);
+        })
+    }
+
 </script>
