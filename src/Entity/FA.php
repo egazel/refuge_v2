@@ -19,11 +19,6 @@ class FA
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $houseType;
-
-    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $hasDog;
@@ -59,6 +54,11 @@ class FA
      */
     private $animalsHosted;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=HouseType::class, inversedBy="faHouseType")
+     */
+    private $houseType;
+
     public function __construct()
     {
         $this->animalsHosted = new ArrayCollection();
@@ -67,18 +67,6 @@ class FA
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getHouseType(): ?string
-    {
-        return $this->houseType;
-    }
-
-    public function setHouseType(?string $houseType): self
-    {
-        $this->houseType = $houseType;
-
-        return $this;
     }
 
     public function getHasDog(): ?bool
@@ -180,6 +168,18 @@ class FA
                 $animalsHosted->setFA(null);
             }
         }
+
+        return $this;
+    }
+
+    public function gethouseType(): ?HouseType
+    {
+        return $this->houseType;
+    }
+
+    public function sethouseType(?HouseType $houseType): self
+    {
+        $this->houseType = $houseType;
 
         return $this;
     }

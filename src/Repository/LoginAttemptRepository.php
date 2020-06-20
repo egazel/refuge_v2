@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class LoginAttemptRepository extends ServiceEntityRepository
 {
-    const DELAY_IN_MINUTES = 5;
+    const DELAY_IN_MINUTES = 3;
 
     public function __construct(ManagerRegistry $registry)
     {

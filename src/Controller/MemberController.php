@@ -2,13 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\FA;
 use App\Entity\Donation;
 use App\Form\MakeDonationType;
+use App\Form\MemberToFosterType;
+use App\Repository\FARepository;
 use App\Repository\UserRepository;
 use App\Repository\EventRepository;
 use App\Repository\AnimalRepository;
 use App\Repository\MembreRepository;
 use App\Repository\DonationRepository;
+use App\Repository\HouseTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -82,7 +86,7 @@ class MemberController extends AbstractController
     }
 
     /**
-      * @IsGranted("ROLE_MEMBER")
+     * @IsGranted("ROLE_MEMBER")
      * @Route("/member/makeDonation", name="makeDonation")
      */
     public function makeDonation(MembreRepository $membreRepository, Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository)
@@ -116,10 +120,57 @@ class MemberController extends AbstractController
       * @IsGranted("ROLE_MEMBER")
      * @Route("/member/becomeFoster", name="becomeFoster")
      */
-    public function becomeFoster()
+    public function becomeFoster(UserRepository $userRepository, DonationRepository $donationRepository, EventRepository $eventRepository, MembreRepository $membreRepository, FARepository $faRepository, Request $request, EntityManagerInterface $entityManager, HouseTypeRepository $houseTypeRepository)
     {
+        $foster = new FA();
+        $memberToFosterForm = $this->createForm(MemberToFosterType::class, $foster);
+        $memberToFosterForm->handleRequest($request);
+        $isModalValid = true;
+
+        if ($memberToFosterForm->isSubmitted()) {
+            if ($memberToFosterForm->isValid()){
+                $user=$this->getUser();
+                $user->setRoles(['ROLE_FA']);
+                $foster->setUser($user);
+                
+                $membre = $membreRepository->findByUser($user);
+                if ($membre != []){
+                    $donations = $membre[0]->getDonation();
+                    if (count($donations)>0){
+                        for($i=0;$i<count($donations);$i++){
+                            $entityManager->remove($donations[$i]);
+                        }
+                    }
+
+                    $events = $membre[0]->getEvent();
+                    if (count($events)>0){
+                        for($i=0;$i<count($events);$i++){
+                            $entityManager->remove($events[$i]);
+                        }
+                    }
+
+                    $entityManager->remove($membre[0]);
+                }
+
+                $entityManager->persist($foster);
+                $entityManager->persist($user);
+
+                $entityManager->flush();
+                $foster = new FA();
+                $memberToFosterForm = $this->createForm(MemberToFosterType::class, $foster);
+                $this->redirectToRoute('fa');
+                $this->addFlash(
+                    'success',
+                    'Vous êtes désormais une famille d\'accueil ! Merci de vous déconnecter/reconnecter'
+                );
+            } else {
+                $isModalValid = false;
+            }
+        }
         return $this->render('member/becomeFoster.html.twig', [
             'controller_name' => 'MemberController',
+            'memberToFosterForm' => $memberToFosterForm->createView(),
+            'isModalValid' => $isModalValid
         ]);
     }
 }
