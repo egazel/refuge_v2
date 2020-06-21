@@ -10,7 +10,7 @@ class FaController extends AbstractController
 {
     /**
      * @IsGranted("ROLE_FA")
-     * @Route("/fa", name="fa")
+     * @Route("/FA", name="FA")
      */
     public function index()
     {

@@ -288,21 +288,21 @@
         axios.get(url+"?id="+animalId).then(function(response) {
             var d = jQuery.parseJSON(response.data);
             if (d.okKids) {
-                var okKids = "☑ Ok enfants";
+                var okKids = "☑ Ok enfants<br>";
             } else {
-                var okKids = "☐ Pas ok enfants";
+                var okKids = "☐ Pas ok enfants<br>";
             };
 
             if (d.okKids) {
-                var okDogs = "☑ Ok chiens";
+                var okDogs = "☑ Ok chiens<br>";
             } else {
-                var okDogs = "☐ Pas ok chiens";
+                var okDogs = "☐ Pas ok chiens<br>";
             };
 
             if (d.okCats) {
-                var okCats = "☑ Ok chats";
+                var okCats = "☑ Ok chats<br>";
             } else {
-                var okCats = "☐ Pas ok chats";
+                var okCats = "☐ Pas ok chats<br>";
             };
 
             if (d.needCare){
