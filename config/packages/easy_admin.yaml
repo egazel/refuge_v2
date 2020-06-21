@@ -1,15 +1,111 @@
 easy_admin:
+  site_name: Refuge du Languedoc
+  design:
+    assets:
+      favicon: '/img/favicon.png'
+    menu:
+      - label: 'Menu'
+        icon: 'bars'
+        children:
+            - {entity: 'User', icon: 'users', label: 'Utilisateurs'}
+            - {entity: 'Animal', icon: 'paw', label: 'Animaux'}
+            - {entity: 'FA', icon: 'house-user', label: 'Familles daccueil'}
+            - {entity: 'HouseType', icon: 'warehouse', label: 'Types de logements'}
+            - {entity: 'Membre', icon: 'user', label: 'Membres'}
+            - {entity: 'Gerant', icon: 'users-cog', label: 'Gérant'}
+            - {entity: 'Donation', icon: 'dollar-sign', label: 'Donations'}
+            - {entity: 'Race', icon: 'otter', label: 'Races'}
+            - {entity: 'Event', icon: 'calendar-alt', label: 'Évenements'}
+
   entities:
-#        # List the entity class name you want to manage
-    - App\Entity\User
-    - App\Entity\Animal
-    - App\Entity\FA
-    - App\Entity\HouseType
-    - App\Entity\Membre
-    - App\Entity\Gerant
-    - App\Entity\Donation
-    - App\Entity\Race
-    - App\Entity\Event
+      User:
+          class: App\Entity\User
+          form:
+              fields:
+                - {property: 'email', label: 'Mail'}
+                - {property: 'roles', label: 'Rôles'}
+                - {property: 'googleAuthenticatorSecret', label: 'Token google'}
+                - {property: 'usual_broser', label: 'Navigateur enregistré'}
+                - {property: 'registerDate', label: 'Date inscription'}
+      Animal:
+          class: App\Entity\Animal
+          form:
+              fields:
+                - {property: 'type', label: 'Type'}
+                - {property: 'name', label: 'Nom'}
+                - {property: 'age', label: 'Age'}
+                - {property: 'sex', label: 'Sexe'}
+                - {property: 'description', label: 'Description'}
+                - {property: 'okDogs', label: 'OK Chiens'}
+                - {property: 'okCats', label: 'OK Chats'}
+                - {property: 'okKids', label: 'OK Enfants'}
+                - {property: 'adoptionPrice', label: 'Prix adoption'}
+                - {property: 'dateAdd', label: 'Date ajout'}
+                - {property: 'needCare', label: 'Soins particuliers'}
+                - {property: 'isHosted', label: 'Est en FA'}
+                - {property: 'FA', label: 'Famille daccueil', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\FA'}}
+                - {property: 'member', label: 'Membre adoptant', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\Membre'}}
+                - {property: 'gerant', label: 'Gérant ayant créé', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\Gerant'}}
+                - {property: 'race', label: 'Race', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\Race'}}
+      FA:
+          class: App\Entity\FA
+          form:
+              fields:
+                - {property: 'hasDog', label: 'A chien(s)'}
+                - {property: 'hasCat', label: 'A chat(s)'}
+                - {property: 'hasKid', label: 'A enfant(s)'}
+                - {property: 'canQuarantine', label: 'Espace de quarantaine'}
+                - {property: 'houseSize', label: 'Taille logement'}
+                - {property: 'user', label: 'Utilisateur correspondant', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\User'}}
+                - {property: 'animalsHosted', label: 'Animaux hébergés', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\Animal'}}
+                - {property: 'houseType', label: 'Type dhabitation', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\HouseType'}}
+
+      HouseType:
+          class: App\Entity\HouseType
+          form:
+              fields:
+                - {property: 'name', label: 'Libellé'}
+                - {property: 'faHouseType', label: 'Type dhabitation FA', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\FA'}}
+
+      Membre:
+          class: App\Entity\Membre
+          form:
+              fields:
+                - {property: 'user', label: 'Utilisateur correspondant', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\User'}}
+                - {property: 'animalsAdopted', label: 'Animaux adoptés', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\Animal'}}
+                - {property: 'event', label: 'Évenements attendus', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\Event'}}
+                - {property: 'donation', label: 'Donations effectuées', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\Donation'}}
+
+      Gerant:
+          class: App\Entity\Gerant
+          form:
+              fields:
+                - {property: 'user', label: 'Utilisateur correspondant', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\User'}}
+                - {property: 'eventsOrganized', label: 'Évenements organisés', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\Event'}}
+
+      Donation:
+          class: App\Entity\Donation
+          form:
+              fields:
+                - {property: 'amount', label: 'Montant'}
+                - {property: 'date', label: 'Date'}
+                - {property: 'memberDonating', label: 'Membre donateur', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\Membre'}}
+
+      Race:
+          class: App\Entity\Race
+          form:
+              fields:
+                - {property: 'name', label: 'Libellé'}
+        
+      Event:
+          class: App\Entity\Event
+          form:
+              fields:
+                - {property: 'date', label: 'Date'}
+                - {property: 'location', label: 'Lieu'}
+                - {property: 'participatingMembers', label: 'Membres participants', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\Membre'}}
+                - {property: 'gerant', label: 'Organisateur', type: 'easyadmin_autocomplete', type_options: {class: 'App\Entity\Gerant'}}
+
 
 
 
