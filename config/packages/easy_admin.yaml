@@ -4,6 +4,7 @@ easy_admin:
     - App\Entity\User
     - App\Entity\Animal
     - App\Entity\FA
+    - App\Entity\HouseType
     - App\Entity\Membre
     - App\Entity\Gerant
     - App\Entity\Donation

@@ -7,6 +7,7 @@ use App\Entity\Event;
 use App\Entity\Animal;
 use App\Form\AnimalType;
 use App\Form\AddEventType;
+use App\Services\ModalService;
 use App\Repository\FARepository;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
@@ -213,15 +214,9 @@ class AdminController extends AbstractController
     * @IsGranted("ROLE_ADMIN")
     * @Route("/injectEventToModal", name="injectEventToModal")
     */
-    public function injectEventToModal(EventRepository $eventRepository, Request $request, SerializerInterface $serializerInterface)
+    public function injectEventToModal(EventRepository $eventRepository, Request $request, ModalService $modalService)
     {
-        $eventDetail = $eventRepository->findOneById($request->query->get('id'));
-        $eventJson = $serializerInterface->serialize($eventDetail, 'json', [
-            'circular_reference_handler' => function ($object) {
-                return $object->getId();
-            }
-        ]);
-        return $this->json($eventJson, 200, ['Content-Type' => 'application/json']);
+        return $modalService->injectEntityToModal($eventRepository, $request);
     }
 
     /** 
@@ -250,15 +245,9 @@ class AdminController extends AbstractController
     * @IsGranted("ROLE_ADMIN")
     * @Route("/injectUserToModal", name="injectUserToModal")
     */
-    public function injectUserToModal(UserRepository $userRepository, Request $request, SerializerInterface $serializerInterface)
+    public function injectUserToModal(UserRepository $userRepository, Request $request, ModalService $modalService)
     {
-        $userDetail = $userRepository->findOneById($request->query->get('id'));
-        $userJson = $serializerInterface->serialize($userDetail, 'json', [
-            'circular_reference_handler' => function ($object) {
-                return $object->getId();
-            }
-        ]);
-        return $this->json($userJson, 200, ['Content-Type' => 'application/json']);
+        return $modalService->injectEntityToModal($userRepository, $request);
     }
 
     /** 
@@ -306,20 +295,13 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('userList');
     }
 
-       
-        /** 
+    /** 
     * @IsGranted("ROLE_ADMIN")
     * @Route("/injectAnimalToModal", name="injectAnimalToModal")
     */
-    public function injectAnimalToModal(AnimalRepository $animalRepository, Request $request, SerializerInterface $serializerInterface)
+    public function injectAnimalToModal(AnimalRepository $animalRepository, Request $request, ModalService $modalService)
     {
-        $animalDetail = $animalRepository->findOneById($request->query->get('id'));
-        $animalJson = $serializerInterface->serialize($animalDetail, 'json', [
-            'circular_reference_handler' => function ($object) {
-                return $object->getId();
-            }
-        ]);
-        return $this->json($animalJson, 200, ['Content-Type' => 'application/json']);
+        return $modalService->injectEntityToModal($animalRepository, $request);
     }
 
     /** 
