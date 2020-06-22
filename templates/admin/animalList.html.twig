@@ -36,7 +36,6 @@
                         {% for animal in animals %}
                             {% if animals|length > 0 %}
                                 <tr  scope="row">
-                                {# <div> <img src={{asset(animal.imageLinks[0])}}></div> #}
                                 <th>{{loop.index0 + 1}}</th>
                                 <td>{{animal.type}}</td>
                                 <td>{{animal.name}}</td>
