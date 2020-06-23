@@ -82,16 +82,53 @@
         const url="{{ path('moreInformations') }}"; 
         axios.get(url+"?id="+animalId).then(function(response) {
             var d = jQuery.parseJSON(response.data);
+            if (d.okKids) {
+                var okKids = "☑ Ok enfants<br>";
+            } else {
+                var okKids = "☐ Pas ok enfants<br>";
+            };
+
+            if (d.okKids) {
+                var okDogs = "☑ Ok chiens<br>";
+            } else {
+                var okDogs = "☐ Pas ok chiens<br>";
+            };
+
+            if (d.okCats) {
+                var okCats = "☑ Ok chats<br>";
+            } else {
+                var okCats = "☐ Pas ok chats<br>";
+            };
+
+            if (d.needCare){
+                var needCare = "⚠️ "+ d.name + " a besoin d'un traitement médical spécifique. ⚠️<br>";
+            } else {
+                var needCare="";
+            }
+    
+            if (d.isHosted){
+                var isHosted = d.name + " est actuellement en famille d'accueil.";
+            } else {
+                var isHosted = d.name + " n'est actuellement pas en famille d'accueil.";
+            }
             var modalContent = 
-                    '<div class="modal-header">'+
-                    '<h5 class="modal-title" id="exampleModalLongTitle">Plus d\'informations à propos de '+d.name+' </h5>'+
+                     '<div class="modal-header">'+
+                    '<h5 class="modal-title" id="exampleModalLongTitle">Plus d\'informations sur '+d.name+'.</h5>'+
                     '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
                     '<span aria-hidden="true">&times;</span>'+
                     '</button>'+
                 '</div>'+
                 '<div class="modal-body">'+
-                    d.description+
-                '</div>';
+                    '<div>'+
+                    okKids+' '+okDogs+' '+okCats+'<br>'+
+                    '</div>'+
+                    d.description+'<br>'+
+                '</div>'+
+                '<div class="modal-footer">'+
+                    isHosted+'<br>'+
+                    needCare+
+                    '<button class="btn btn-warning" type="submit"><i class="far fa-handshake"></i> Adopter</button>'+
+                '</div>'
             $('#contentInformations').append(modalContent);
         })
     } 
