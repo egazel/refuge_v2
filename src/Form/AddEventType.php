@@ -25,8 +25,6 @@ class AddEventType extends AbstractType
             ))
 
             ->add('location')
-            // ->add('participatingMembers')
-            // ->add('gerant')
         ;
     }
 

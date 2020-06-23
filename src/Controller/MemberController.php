@@ -48,7 +48,7 @@ class MemberController extends AbstractController
      */
     public function animalsToAdopt(AnimalRepository $animalRepository)
     {
-        $animals = $animalRepository->findAll();
+        $animals = $animalRepository->findByMember(NULL);
         return $this->render('member/animalsToAdopt.html.twig', [
             'controller_name' => 'MemberController',
             'animals' => $animals
@@ -69,6 +69,30 @@ class MemberController extends AbstractController
             }
         ]);
         return $this->json($animalJson, 200, ['Content-Type' => 'application/json']);
+    }
+
+    /**
+     * @IsGranted("ROLE_MEMBER")
+     * @Route("/member/adoptAnimal/{id}", name="adoptAnimal")
+     */
+    public function adoptAnimal($id, AnimalRepository $animalRepository, MembreRepository $membreRepository, EntityManagerInterface $entityManager)
+    {
+        $animals = $animalRepository->findByMember(NULL);
+
+        $animal = $animalRepository->findOneById($id);
+        $membre = $membreRepository->findOneByUser($this->getUser());
+
+        $animal->setMember($membre);
+        $membre->addAnimalsAdopted($animal);
+
+        $entityManager->persist($animal);
+        $entityManager->persist($membre);
+        $entityManager->flush();
+
+        return $this->render('member/animalsToAdopt.html.twig', [
+            'controller_name' => 'MemberController',
+            'animals' => $animals
+        ]);
     }
 
     /**

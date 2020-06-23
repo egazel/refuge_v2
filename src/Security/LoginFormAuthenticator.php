@@ -93,8 +93,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         if ($bname != $savedBrowserForCurrentUser) {
             if ($savedBrowserForCurrentUser!=NULL){
 
-                $email = (new TemplatedEmail())->from(new Address('samappagency@gmail.com', 'Artisans App'))
-                                                        ->to(new Address('samappagency@gmail.com', $currentUser->getUsername()))
+                $email = (new TemplatedEmail())->from(new Address('elie@gazel.com', 'Refuge du Languedoc'))
+                                                        ->to(new Address('elie@gazel.com', $currentUser->getUsername()))
                                                         ->subject('Nouveau navigateur détecté')
                                                         ->htmlTemplate('email/browser.html.twig')
                                                         ->context([
@@ -146,8 +146,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function checkCredentials($credentials, UserInterface $user)
     {
         if ($this->loginAttemptRepository->countRecentLoginAttempts($credentials['email']) > 3) {
-            $email = (new TemplatedEmail())->from(new Address('samappagency@gmail.com', 'Artisans App'))
-                                                   ->to(new Address('samappagency@gmail.com', $user->getUsername()))
+            $email = (new TemplatedEmail())->from(new Address('elie@gazel.net', 'Refuge du Languedoc'))
+                                                   ->to(new Address('elie@gazel.net', $user->getUsername()))
                                                    ->subject('Tentative de connexion sur votre compte')
                                                    ->htmlTemplate('email/security.html.twig')
                                                    ->context([

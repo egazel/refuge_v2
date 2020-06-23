@@ -8,6 +8,7 @@ use App\Entity\Animal;
 use App\Form\AnimalType;
 use App\Form\AddEventType;
 use App\Services\ModalService;
+use App\Services\AnimalService;
 use App\Repository\FARepository;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
@@ -92,55 +93,17 @@ class AdminController extends AbstractController
     * @IsGranted("ROLE_ADMIN")
     * @Route("/admin/animalList", name="animalList")
     */
-    public function animalList(ContainerParametersHelper $pathHelpers, GerantRepository $gerantRepository, AnimalRepository $animalRepository, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger)
+    public function animalList(AnimalService $animalService, AnimalRepository $animalRepository, Request $request)
     {
         $animal = new Animal();
-        $gerant = $gerantRepository->findOneByUser($this->getUser());
         $addAnimalForm = $this->createForm(AnimalType::class, $animal);
-        $addAnimalForm->handleRequest($request);
-        $isModalValid = true;
-
-        if ($addAnimalForm->isSubmitted()) {
-            if ($addAnimalForm->isValid()){
-                $animal->setGerant($gerant);
-                $animal->setIsHosted(false);
-                $animal->setDateAdd(new \DateTime('now'));
-                /** @var UploadedFile $picture */
-                $picture = $addAnimalForm->get('imageLinks')->getData();
-                if ($picture){
-                    $originalFileName = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
-                    $fileExtension = pathinfo($picture->getClientOriginalName(), PATHINFO_EXTENSION);
-
-                    $relativeSaveDir = '/img/Animals/'.$slugger->slug($animal->getName())."/";
-                    $saveDir = $pathHelpers->getApplicationRootDir(). "/public" . $relativeSaveDir;
-
-                    $safeFileName = $slugger->slug($originalFileName) . "." .  $fileExtension;
-                    
-                    $picture->move(
-                        $saveDir,
-                        $safeFileName
-                    );
-
-                    $animal->setImageLinks([$relativeSaveDir . "/" . $safeFileName]);
-                }
-
-                
-                $entityManager->persist($animal);
-                $entityManager->flush();
-                $this->addFlash(
-                    'success',
-                    'L\'animal a bien été ajouté !'
-                );
-                $animal = new Animal();
-                $addAnimalForm = $this->createForm(AnimalType::class, $animal);
-                $this->redirectToRoute('animalList', ['addAnimalForm' => $addAnimalForm->createView(), 'isModalValid' => $isModalValid]);
-            } else {
-                $isModalValid = false;
-            }
+        if ($addAnimalForm->handleRequest($request)){
+            $animalService->createAnimal($addAnimalForm, $animal);
         }
+        
         $animals = $animalRepository->findAll();
         return $this->render('admin/animalList.html.twig', 
-            ['animals' => $animals, 'addAnimalForm' => $addAnimalForm->createView(), 'isModalValid' => $isModalValid]);
+            ['animals' => $animals, 'addAnimalForm' => $addAnimalForm->createView(), 'isModalValid' => true]);
     }
 
     /** 

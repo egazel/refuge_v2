@@ -1,4 +1,4 @@
-<link rel="icon" href="/img/favicon-32x32.png" />
+<link rel="icon" href="/img/favicon-32x32.png"/>
 <link rel="stylesheet" href="/css/dashboards.css"/>
 <link rel="stylesheet" href="/css/bootstrap.css">
 <link rel="stylesheet" href="/css/general.css">
@@ -14,55 +14,57 @@
 <script src="https://kit.fontawesome.com/6576995845.js" crossorigin="anonymous"></script>
 
 <nav class="navbar navbar-expand-lg shadow navbar-dark navColor">
-    <a class="navbar-brand hvr-icon-spin hvr-grow" href="{{ path('admin') }}">
-        <img src="/img/logo.png" alt="" class="hvr-icon rounded-circle shadow img-fluid mt-2 mb-2" style="width: 32px;">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+	<a class="navbar-brand hvr-icon-spin hvr-grow" href="{{ path('admin') }}">
+		<img src="/img/logo.png" alt="" class="hvr-icon rounded-circle shadow img-fluid mt-2 mb-2" style="width: 32px;">
+	</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
 
-    <div class="collapse navbar-collapse" id="navbarColor03">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link hvr-icon-pulse-grow" href="{{ path('animalList') }}">
-                    <i class="far fa-paw text-primary hvr-icon"></i>
-                    Liste des animaux
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link hvr-icon-pulse-grow" href="{{ path('userList') }}">
-                    <i class="far fa-user-circle text-info hvr-icon"></i>
-                    Liste des utilisateurs
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link hvr-icon-pulse-grow" href="{{ path('eventList') }}">
-                    <i class="fas fa-calendar-alt text-warning hvr-icon"></i>
-                    Évenements
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link hvr-icon-pulse-grow" href="{{path('donationsList')}}">
-                    <i class="fas fa-money-bill-alt text-danger hvr-icon"></i>
-                    Donations
-                </a>
-            </li>
-        </ul>
-        <ul class="navbar navbar-nav navbar-right navbar-dark">
-            <li><a class="nav-link hvr-icon-wobble-horizontal" href="/logout">
-                    <span class="fas fa-sign-out-alt hvr-icon"></span> Déconnexion
-                </a>
-            </li>
-        </ul>
-  </div>
+	<div class="collapse navbar-collapse" id="navbarColor03">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link hvr-icon-pulse-grow" href="{{ path('animalList') }}">
+					<i class="far fa-paw text-primary hvr-icon"></i>
+					Liste des animaux
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link hvr-icon-pulse-grow" href="{{ path('userList') }}">
+					<i class="far fa-user-circle text-info hvr-icon"></i>
+					Liste des utilisateurs
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link hvr-icon-pulse-grow" href="{{ path('eventList') }}">
+					<i class="fas fa-calendar-alt text-warning hvr-icon"></i>
+					Évenements
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link hvr-icon-pulse-grow" href="{{path('donationsList')}}">
+					<i class="fas fa-money-bill-alt text-danger hvr-icon"></i>
+					Donations
+				</a>
+			</li>
+		</ul>
+		<ul class="navbar navbar-nav navbar-right navbar-dark">
+			<li>
+				<a class="nav-link hvr-icon-wobble-horizontal" href="/logout">
+					<span class="fas fa-sign-out-alt hvr-icon"></span>
+					Déconnexion
+				</a>
+			</li>
+		</ul>
+	</div>
 </nav>
 
 <!-- Flash message -->
 {% for label, messages in app.flashes %}
-    <div class="alert alert-{{ label }}">
-        {% for message in messages %}
-            <p>{{ message|raw }}</p>
-        {% endfor %}
-    </div>
+	<div class="alert alert-{{ label }}">
+		{% for message in messages %}
+			<p>{{ message|raw }}</p>
+		{% endfor %}
+	</div>
 {% endfor %}
 <!-- /Flash message -->
