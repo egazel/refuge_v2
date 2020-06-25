@@ -6,6 +6,8 @@ use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -16,7 +18,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="app_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils, UserRepository $userRepository): Response
+    public function login(AuthenticationUtils $authenticationUtils, UserRepository $userRepository, UrlGeneratorInterface $urlGenerator): Response
     {
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
@@ -26,6 +28,27 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        // check if the user is logged in and redirect according to roles
+        $currentUser = $this->getUser();
+        if ($currentUser != NULL) {
+            $roles = $currentUser->getRoles();
+        
+            if (in_array("ROLE_ADMIN", $roles)) {
+                return new RedirectResponse($urlGenerator->generate('admin'));
+            }
+
+            if (in_array("ROLE_FA", $roles)) {
+                return new RedirectResponse($urlGenerator->generate('FA'));
+            }
+
+            if (in_array("ROLE_MEMBER", $roles)) {
+                return new RedirectResponse($urlGenerator->generate('member'));
+            }
+
+            if (in_array("ROLE_SUPER_ADMIN", $roles)) {
+                return new RedirectResponse($this->urlGenerator->generate('backend'));
+            }
+        }
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 

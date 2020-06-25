@@ -39,8 +39,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
+        - { path: ^/backend, role: ROLE_SUPER_ADMIN }
         - { path: ^/admin, role: ROLE_ADMIN }
         - { path: ^/member, role: ROLE_MEMBER }
         - { path: ^/FA, role: ROLE_FA }
-        # - { path: ^/backend, role: ROLE_SUPER_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }

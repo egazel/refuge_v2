@@ -192,7 +192,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         }
 
         if (in_array("ROLE_SUPER_ADMIN", $roles)) {
-            return new RedirectResponse($this->urlGenerator->generate('easy_admin_bundle'));
+            return new RedirectResponse($this->urlGenerator->generate('/backend'));
         }
     }
 
